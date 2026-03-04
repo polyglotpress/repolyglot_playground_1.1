@@ -1,0 +1,50 @@
+<% layout('layouts/boilerplate.ejs')%>
+
+    <main class="container mt-5">
+        <h1 id="new-title">Add your custom task:</h1>
+
+        <div class="form-div">
+            <form action="/tasks" method="POST" id="new-form">
+
+                <div class="form-group">
+                    <label class="form-label" for="task-title">Task title</label>
+                    <input id="task-title" class="form-control" type="text" name="task[title]"
+                        placeholder="e.g. learn 15 new verb infinitives" required>
+                </div>
+                <div class="form-group mt-3">
+                    <label class="form-label" for="task-description">Describe the task</label>
+                    <textarea id="task-description" class="form-control" rows="3" name="task[description]"></textarea>
+                </div>
+                <div class="form-group mt-3">
+                    <label class="form-label" for="task-category">Category:</label>
+                    <input id="task-category" class="form-control" type="text" name="task[category]">
+                </div>
+                <div class="form-group mt-3">
+                    <% const languages=['English', 'French' , 'Spanish' , 'Russian' , 'Hebrew' , 'Hungarian' ]; %>
+                        <label  for="task-language">Target language:</label>
+                        <select multiple class="form-control" name="task[language]" id="task-language">
+                            <% languages.forEach(function(lang) { %>
+                                <option value="<%= lang %>">
+                                    <%= lang %>
+                                </option>
+                                <% }) %>
+                        </select>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button id="new-button" class="btn btn-dark mb-2 mt-5">Add task</button>
+                </div>
+
+            </form>
+
+
+        </div>
+        <p><a class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                href="/tasks">back to tasks</a></p>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>

@@ -1,0 +1,65 @@
+<% layout('layouts/boilerplate.ejs')%>
+
+
+    <h1 class="text-center mt-4">current task:</h1>
+    <div class="row mt-5" id="current-task-card-container">
+        <div class="col-6 offset-3">
+            <div class="card">
+
+                <!-- img -->
+                <!-- class card-img-top -->
+
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <%= task.title %>
+                    </h4>
+                    <p class="card-text">
+                        <%= task.description %>
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <p class="card-text">
+                        <%= task.language %>
+                    </p>
+                    <p>
+                        <%= task.category %>
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <a class="card-link btn btn-info" id="start-task" href="#">Start</a>
+                    <a class="card-link btn btn-info" href="#">Mark Complete</a>
+                    <a href="/tasks/<%=task._id%>/edit" class="card-link btn btn-warning">Edit</a>
+                    <form class="d-inline" action="/tasks/<%= task._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- when starting task, hide all above and show all below -->
+
+   
+
+    <div id="start-task-container" class="d-none">
+        <h1> <%= task.title %></h1>
+        <div id="task-notes">
+            <h3>Add Task notes</h3>
+            <form action="/tasks/<%= task._id %>/notes" method="POST">
+
+                <div class="mb-3">
+                    <label for="">Note:</label>
+                    <input type="text">
+                </div>
+                <button class="btn btn-info">Save notes</button>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <a href="/tasks">Back to tasks list</a>
+    </div>

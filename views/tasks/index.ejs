@@ -1,0 +1,13 @@
+<% layout('layouts/boilerplate.ejs')%>
+
+    <h1>All tasks</h1>
+    <div>
+        <p> <a href="/tasks/new" class="link-dark link-underline-opacity-25">Create new task</a></p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <% for (let task of tasks) {%>
+            <li class="list-group-item">
+               <p> <a class="link-dark link-underline-opacity-25" href="/tasks/<%= task.id%>""><%= task.title %></a></p>
+            </li>
+            <% } %>
+    </ul>
