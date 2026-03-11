@@ -1,0 +1,24 @@
+<% layout('layouts/boilerplate.ejs')%>
+    <div id="start-task-container" class="d-block mt-5">
+
+        <h5>
+            <%= task.title %>
+        </h5>
+        <div id="task-notes">
+
+            <p>Add note:</p>
+            <form action="/tasks/<%= task._id %>/notes" method="POST">
+
+
+                <div class="mb-3">
+                    <label for="note">Note:</label>
+                    <input id="note" name="note" type="text">
+                </div>
+                <button class="btn btn-primary">Save note</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <a href="/tasks">Back to tasks list</a>
+    </div>

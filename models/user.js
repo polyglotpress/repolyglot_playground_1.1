@@ -1,28 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const UserSchema = new Schema({
-    name: String,
-    username: String,
-    password: {
-        type: String,
-        required: true
-    },
+    firstname: String,
+    lastname: String,
     email: {
         type: String,
         required: true,
         unique: true
     },
-    // nativeLanguage: String,
-    // languages: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Language"
-    // }],//array of languages per user
-    // tasks: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Task"
-    // }]
+    nativeLanguage: String,
+    languagesLearning:  [String],//array of languages per user
+    tasks: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Task'
+    }] //array of tasks per user
 })
 
+UserSchema.plugin(passportLocalMongoose.default); //username and password
 
 module.exports = mongoose.model('User', UserSchema);

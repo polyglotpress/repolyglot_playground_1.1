@@ -50,7 +50,7 @@ git clone https://github.com/yourusername/repolyglot1.0.git
 
 Navigate into the project directory:
 
-cd repolyglot1.0
+cd repolyglot_1.0_
 
 Install dependencies:
 
@@ -59,7 +59,10 @@ npm install
 Create a .env file in the root directory and add:
 
 MONGO_URI=your_mongodb_connection_string
-//////////SESSION_SECRET=your_secret_key
+
+
+Seed the database (optional):
+node seeds/index.js
 
 Run the development server:
 

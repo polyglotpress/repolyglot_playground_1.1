@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
@@ -7,9 +6,11 @@ const TaskSchema = new Schema({
     category: String,
     description: String,
     language: String,
-    notes: [{
-        noteDetails: String
-    }]
+    notes: [String],
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 
 })
 

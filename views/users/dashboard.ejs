@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate.ejs')%>
 
 
-    user languages learning list
+    <!-- user languages learning list
 
     user tasks link
     user vocab to learn list (from chrome extension)
@@ -11,35 +11,38 @@
         <li>total tasks completed</li>
         <li>days since registration</li>
 
-    </ul>
+    </ul> -->
 
     <div class="container">
         <div class="main-body">
 
             <!-- Breadcrumb -->
-            <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <!-- <nav aria-label="breadcrumb" class="main-breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">User</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                 </ol>
-            </nav>
+            </nav> -->
             <!-- /Breadcrumb -->
 
-            <div class="row gutters-sm">
+            <div class="row mt-5">
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="" alt="profile pic" class="rounded-circle" width="150">
+                                <!-- <img src="" alt="profile pic" class="rounded-circle" width="150"> -->
                                 <div class="mt-3">
                                     <h4>
                                         <%=user.username%>
                                     </h4>
-                                    <p class="text-secondary mb-1">bla bla bla </p>
-                                    <p class="text-muted font-size-sm">bla bloa bla</p>
-                                    <button class="btn btn-primary">Follow?</button>
-                                    <button class="btn btn-outline-primary">Message?</button>
+                                    <p class="text-secondary mb-3">Aspiring Hyperpolyglot</p>
+                                    <!-- <p class="text-muted font-size-sm">bla bloa bla</p> -->
+                                    <% if(currentUser && !user.equals(currentUser._id)) { %>
+                                        <button class="btn btn-primary">Follow</button>
+                                        <button class="btn btn-outline-primary">Message</button>
+
+                                        <% } %>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +57,8 @@
                                     <h6 class="mb-0">Full Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    Kenneth Valdez
+                                    <%= user.firstname %>
+                                        <%= user.lastname %>
                                 </div>
                             </div>
                             <hr>
@@ -74,33 +78,88 @@
                                     <h6 class="mb-0">Native Language</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    native language here
+                                    <%= user.nativeLanguage %>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-
-
-                                    <button class="btn btn-info">Edit</button>
-
-                                    <!-- <form action="/users/<%= user._id %>?_method=DELETE" method="POST"> -->
-                                    <button class="btn btn-warning" id="delete-profile" data-bs-toggle="modal"
+                                    <a class="btn btn-warning" href="/<%= user._id %>">Edit</a>
+                                    <button class="btn btn-danger" id="delete-profile" data-bs-toggle="modal"
                                         data-bs-target="#myModal">Delete</button>
-                                    <!-- </form> -->
                                 </div>
 
                                 <div class="row">
                                     <div class="col-sm-6" id="verify-delete-box">
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
+
+            <!--  -->
+
+            <div class="row mt-5">
+
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Languages aquiring:</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+
+                                    <% for(let language of user.languagesLearning) { %>
+                                        <p>
+                                            Learning: <%= language %>
+                                        </p>
+                                        <% } %>
+                                </div>
+                                <div class="col-sm-12">
+                                    <a class="btn btn-primary" href="/<%= user._id %>/languages/new">Add Language</a>
+                                    <a class="btn btn-warning" id="edit-languages">Edit Languages</a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <%= user.email %>
+                                </div>
+                            </div>
+                            <hr>
+
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Native Language</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <%= user.nativeLanguage %>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a class="btn btn-warning" href="/<%= user._id %>">Edit</a>
+                                    <button class="btn btn-danger" id="delete-profile" data-bs-toggle="modal"
+                                        data-bs-target="#myModal">Delete</button>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6" id="verify-delete-box">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Modal -->
@@ -116,11 +175,10 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
-                            <form id="delete-user-form" action="/users/<%= user._id %>?_method=DELETE" method="POST">
+                            <form id="delete-user-form" action="/<%= user._id %>?_method=DELETE" method="POST">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>

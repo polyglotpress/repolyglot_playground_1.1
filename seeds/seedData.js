@@ -11,3 +11,47 @@ module.exports.seedTasks = [
     'Skim through a dictionary',
     'Listen to a song and learn the lyric translations'
 ]
+
+module.exports.seedUsers = [
+    {
+        firstname: "Lee",
+        lastname: "Hammer",
+        email: "leehammer@gmail.com",
+        nativeLanguage: "English",
+        languagesLearning: ["Spanish", "Hungarian"]
+       
+    },
+    {
+        firstname: "Antonio",
+        lastname: "Jueve",
+        email: "antoniojueve@gmail.com",
+        nativeLanguage: "Spanish",
+        languagesLearning: ["English", "Portuguese", "Yiddish"]
+       
+    },
+    {
+        firstname: "Elizabeth",
+        lastname: "Smith",
+        email: "lizsmith@email.fr",
+        nativeLanguage: "French",
+       languagesLearning: ["Spanish", "Finnish"]
+    },
+    {
+        firstname: "Lior",
+        lastname: "Shahar",
+        email: "lisha@email.com",
+        nativeLanguage: "Hebrew",
+        languagesLearning: ["English", "French"]
+       
+
+    },
+    {
+        firstname: "Alexander",
+        lastname: "Koplovitch",
+        email: "alex123@gmail.com",
+        nativeLanguage: "Russian",
+        languagesLearning: ["English"]
+        
+
+    }
+]

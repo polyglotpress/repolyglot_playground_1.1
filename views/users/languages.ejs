@@ -4,7 +4,7 @@
     <p>user can add, edit, update and delete a language</p>
     <p>program will check that language exists and save</p>
 
-    <form action="languages/new" method="POST">
+    <form action="/<%=user._id%>/languages/new" method="POST">
 
         <label for="language-new">Insert new language</label>
         <input type="text" id="language-new" name="language[language]">

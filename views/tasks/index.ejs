@@ -1,13 +1,48 @@
 <% layout('layouts/boilerplate.ejs')%>
 
-    <h1>All tasks</h1>
+    <h4 class="mt-4">All tasks</h4>
     <div>
-        <p> <a href="/tasks/new" class="link-dark link-underline-opacity-25">Create new task</a></p>
+        <p> <a href="/tasks/new" class="link-primary link-underline-opacity-75">Create new task</a></p>
     </div>
-    <ul class="list-group list-group-flush">
-        <% for (let task of tasks) {%>
-            <li class="list-group-item">
-               <p> <a class="link-dark link-underline-opacity-25" href="/tasks/<%= task.id%>""><%= task.title %></a></p>
-            </li>
-            <% } %>
-    </ul>
+
+
+    <div class="container">
+
+        <% let count=3; %>
+
+            <% for (let task of tasks) { %>
+
+                <% if(count==3) {%>
+
+                    <div class="row mb-3">
+                        <% count=0; %>
+                            <% } %>
+                                <div class="col-4">
+
+                                    <div class="card border-dark h-100">
+                                        <div class="card-header border-dark bg-info">
+                                            #<%= task.category || 'other' %>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <!-- <a class="text-center text-decoration-none" -->
+                                                <!-- href="/tasks/<%= task._id%>"> -->
+                                                <%= task.title %>
+                                                    <!-- </a> -->
+                                            </h5>
+                                            <p class="card-subtitle mb-2 text-muted"> created by <%= task.creator.username %>
+                                            </p>
+                                            <a href="/tasks/<%= task._id%>" class="card-link">View</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <% if(count==2) {%>
+                    </div>
+
+                    <% } %>
+                        <% count ++; %>
+                            <% } %>
+
+    </div>

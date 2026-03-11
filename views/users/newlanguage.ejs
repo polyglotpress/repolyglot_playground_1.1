@@ -1,0 +1,20 @@
+<% layout('layouts/boilerplate.ejs')%>
+
+<div class="col-4 offset-1 mt-4">
+ <form action="/<%= user._id %>/languages" method="POST">
+
+ <p><%= user.username %></p>
+        <div class="mb-3">
+            <label for="language" class="form-label">Add language</label>
+
+            <div class="d-flex">
+            <input type="text" id="language" class="form-control" name="user[addedLanguage]">
+              <button class="btn btn-primary
+              ">Add language</button>
+              </div>
+        </div>
+   
+      
+        </form>
+
+        </div>
