@@ -1,27 +1,29 @@
 const express = require('express');
-const path = require('path');
+
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-
-//const Task = require('./models/task');
-const taskRoutes = require('./routes/tasks');
-const userRoutes = require('./routes/users');
-//const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const flash = require('connect-flash');
-
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-
-const User = require('./models/user');
-//const morgan = require('morgan');
+const flash = require('connect-flash');
+const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, './.env') }); //
+
+//models
+const User = require('./models/user');
+const Task = require('./models/task');
+
+//routes
+const taskRoutes = require('./routes/tasks');
+const userRoutes = require('./routes/users');
+
+
 
 //database connection
 let MONGO_URL = process.env.MONGO_URI;
-mongoose.connect(MONGO_URL, { family: 4})
+mongoose.connect(MONGO_URL, { family: 4 })
     .then(() => {
         console.log("database connected");
     })
@@ -39,12 +41,22 @@ app.set('view engine', 'ejs'); //
 app.set('views', path.join(__dirname, 'views'));
 app.engine('ejs', ejsMate);
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(express.static(__dirname + '/public'));
 
 app.use(session({
     secret: 'terrible app secret',
-    saveUninitialized: true,
-    resave: true
- }));
+    saveUninitialized: false,
+    resave: false,
+    // cookie: {
+    //     httpOnly: true,
+    //     secure: false, //for http connections
+    //     maxAge: 360000,
+    //     expires: new Date(Date.now() + 360000)
+    // }
+}));
 
 app.use(flash());
 
@@ -56,24 +68,15 @@ passport.serializeUser(User.serializeUser()); //method from passport local mongo
 passport.deserializeUser(User.deserializeUser()); //unstore in session
 
 app.use((req, res, next) => {
-    //console.log(req.session);
-
     res.locals.currentUser = req.user;
-    // if (req.locals.currentUser)
-    //     console.log(currentUser);
-    
+    res.locals.returnTo = req.session.returnTo;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
 
 
-
-app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.use(express.static(__dirname + '/public'));
-app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 app.use('/tasks', taskRoutes);
 app.use('/', userRoutes); //  not /users
@@ -82,15 +85,11 @@ app.use('/', userRoutes); //  not /users
 //routes visible to everyone:
 
 //1. application home page
-app.get('/', (req, res) => {
-    res.render('home')
+app.get('/', async (req, res) => {
+    const tasksCount = await Task.countDocuments();
+    const usersCount = await User.countDocuments();
+    res.render('home', { tasksCount, usersCount})
 })
-
-//2. basic seed tasks?
-
-//3. about and contact page, socials etc
-
-
 
 app.get('/secret', (req, res) => {
     if (!req.isAuthenticated()) {
@@ -99,6 +98,10 @@ app.get('/secret', (req, res) => {
     }
     res.send("you can access this");
 })
+
+// app.all("*", (req, res) => {
+//     res.status(404).render("404");
+// })
 
 
 // port to host server

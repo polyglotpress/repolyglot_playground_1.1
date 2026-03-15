@@ -1,20 +1,15 @@
 const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-
 const Task = require('../models/task');
 const User = require('../models/user');
-
 const { seedTasks, seedUsers } = require('./seedData');
 
 
 //const languagesArray = ["English", "Sp"];
 
 let MONGO_URL = process.env.MONGO_URI;
-console.log("connection url is: " + MONGO_URL);
-
 mongoose.connect(MONGO_URL);
-
 mongoose.connection.on("error", console.error.bind(console, "connection error:"));
 mongoose.connection.once("open", () => {
     console.log("Database connected");
@@ -30,10 +25,9 @@ const seedTaskDb = async () => {
             category: "General",
             description: "No description yet",
             language: "Any",
-            creator: '69ae967b0d5e82fa74f4ff3e' //
+            creator: '69b57fc9b8cb7aece3effd7c' //
         })
         await task.save();
-        console.log("new task is: " + task);
     }
     console.log("Seeding complete");
 }
@@ -48,19 +42,15 @@ seedTaskDb();
 //         newUser = new User({
 //             firstname: seedUser.firstname,
 //             lastname: seedUser.lastname,
+//             password: seedUser.password,
 //             username: `${seedUser.firstname.toLowerCase()}${seedUser.lastname.toLowerCase()}`,
 //             email: seedUser.email,
 //             nativeLanguage: seedUser.nativeLanguage,
 //             languagesLearning: seedUser.languagesLearning
 //         })
-//         //  for(const languageLearning of seedUserslanguagesLearning) {
-//         // newUser.languagesLearning.push(languageLearning)
-//         //         }
-//         await newUser.save();
-//         console.log("new user seeded: " + newUser);
-//     }
-// }
-
+//            const registeredUser = await User.register(newUser, seedUser.password);
+//         //await newUser.save();
+//     }}
 
 // seedUserDb();
 

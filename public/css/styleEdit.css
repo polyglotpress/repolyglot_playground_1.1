@@ -1,0 +1,25 @@
+body {
+    background-color: #FFD786;
+    color: #2c3e50
+}
+
+.form-control {
+    border: 1px solid black;
+}
+
+.update-task-btn, .add-task-btn, .add-lang-btn{
+    background-color: #237227;
+    color: white;
+    border: 1px solid black;
+}
+
+.card {
+    border: 1px solid black;
+}
+
+.add-task {
+     background-color: #237227;
+    color: white;
+    border: 1px solid black;
+
+}

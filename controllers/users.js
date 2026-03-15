@@ -1,5 +1,5 @@
 
-
+const Task = require('../models/task')
 const User = require('../models/user')
 
 module.exports.registerForm = (async (req, res) => {
@@ -10,7 +10,6 @@ module.exports.registerNewUser = (async (req, res, next) => {
     try {
         const user = new User({ firstname: req.body.firstname, lastname: req.body.lastname, nativeLanguage: req.body.nativeLanguage, email: req.body.email, username: req.body.username })
         const registeredUser = await User.register(user, req.body.password);
-        console.log(registeredUser);
         req.login(registeredUser, err => {
             if (err) return next(err);
             req.flash('success', 'Welcome to Repolyglot!'); //?
@@ -28,12 +27,13 @@ module.exports.loginForm = ((req, res) => {
 })
 
 module.exports.logUserIn = ((req, res) => {
-    req.flash('success', 'welcome back, you are now logged in');
-    // const redirectUrl = req.locals.returnToUrl || '/tasks';
-    // delete req.locals.returnToUrl;
-    console.log("logged in");
-   // res.redirect('/tasks');
-    res.redirect(`/${req.user._id}/dashboard`);
+    console.log("session returnTo: ", req.session.returnTo);
+      console.log("session id: ", req.sessionID);
+    req.flash('success', 'Welcome back to RePolyglot');
+    // const redirectUrl = req.session.returnTo || `/${req.user._id}/dashboard`;
+     const redirectUrl = res.locals.returnTo || `/${req.user._id}/dashboard`;
+    //delete req.session.returnTo;
+    res.redirect(redirectUrl);
 })
 
 module.exports.logOut = ((req, res, next) => { //post?
@@ -47,10 +47,11 @@ module.exports.logOut = ((req, res, next) => { //post?
 })
 
 module.exports.loadDashboard = (
-    async (req, res) => { 
+    async (req, res) => {
         try {
-            const user = await User.findById(req.params.id);
-            res.render('users/dashboard', { user });
+            const tasks = await Task.find({ creator: req.user._id });
+            const user = await User.findById(req.params.id).populate("tasks");
+            res.render('users/dashboard', { user, tasks: user.tasks });
         } catch (err) {
             console.log(err.message);
         }
@@ -68,7 +69,6 @@ module.exports.updateProfile = ( //this isn't actually updating details
     async (req, res) => {
         try {
             const user = await User.findByIdAndUpdate(req.params.id, { ...req.body.user }, { new: true });
-            console.log("updated profile: " + user);
             res.redirect(`/${user.id}/dashboard`);
         } catch (err) {
             console.log(err.message);

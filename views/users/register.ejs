@@ -1,56 +1,44 @@
 <% layout('layouts/boilerplate.ejs')%>
 
-   <div class="container-fluid">
-    <div>
-      <div class="text-black">
-    <div class="align-items-center mt-5"> 
-
-
-    <form class="col-8 offset-2" action="/register" method="POST">
-          <h3 class="fw-normal mb-3 pb-3 text-center">Sign Up</h3>
-
+  <div class="register-body">
+    <div class="align-items-center mt-5">
+      <form class="col-8 offset-2" action="/register" method="POST">
+        <h1 class="display-6 mb-3 pb-3 text-center">Sign Up</h1>
         <div class="form-floating mb-3">
-          
-            <input type="text" id="firstname" class="form-control" name="firstname" placeholder="email@example.com">
-              <label for="firstname" class="form-label">First Name:</label>
+
+          <input type="text" id="firstname" class="form-control" name="firstname" placeholder="email@example.com">
+          <label for="firstname" class="form-label">First Name:</label>
         </div>
-         <div class="form-floating mb-3">
-              <input type="text" id="lastname" class="form-control" name="lastname" placeholder="lastname">
-            <label for="lastname" class="form-label">Last Name:</label>
-          
+        <div class="form-floating mb-3">
+          <input type="text" id="lastname" class="form-control" name="lastname" placeholder="lastname">
+          <label for="lastname" class="form-label">Last Name:</label>
+
         </div>
-         <div class="form-floating mb-3">
-             <input type="text" id="nativeLanguage" class="form-control" name="nativeLanguage" placeholder="nativeIn">
-            <label for="nativeLanguage" class="form-label">Native Language</label>
-           
+        <div class="form-floating mb-3">
+          <input type="text" id="nativeLanguage" class="form-control" name="nativeLanguage" placeholder="nativeIn">
+          <label for="nativeLanguage" class="form-label">Native Language</label>
         </div>
 
         <div class="form-floating mb-3">
-              <input type="text" id="username" class="form-control" name="username" placeholder="username" required>
-            <label for="username" class="form-label">Username:</label>
-          
+          <input type="text" id="username" class="form-control" name="username" placeholder="username" required>
+          <label for="username" class="form-label">Username:</label>
         </div>
 
         <div class="form-floating mb-3">
-             <input type="email" id="email" class="form-control" name="email" placeholder="email@example.com" required>
-            <label for="email" class="form-label">Email:</label>
-           
+          <input type="email" id="email" class="form-control" name="email" placeholder="email@example.com" required>
+          <label for="email" class="form-label">Email:</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="password" id="password" class="form-control" name="password" placeholder="password" required>
-            <label for="password" class="form-label">Password:</label>
-            
+          <input type="password" id="password" class="form-control" name="password" placeholder="password" required>
+          <label for="password" class="form-label">Password:</label>
         </div>
 
-        <button class="btn btn-primary mt-3 ">Register</button>
+        <button class="register-btn btn btn-primary mt-3 ">Register</button>
 
-        <!-- <button class="btn btn-light">Peruse without Registering</button> -->
-        <p class="mt-4">Already have an account? <a href="/login" class="link-primary">Login here</a></p>
+        <p class="mt-4">Already have an account? <a href="/login" class="link-success">Login here</a></p>
 
-        </form>
+      </form>
 
-        </div>
-        </div>
-        </div>
-        </div>
+    </div>
+  </div>

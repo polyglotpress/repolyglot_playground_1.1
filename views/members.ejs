@@ -1,18 +1,61 @@
 <% layout('layouts/boilerplate.ejs')%>
 
-    <h4>all members</h4>
+    <h4 class="text-center mt-3 mb-3">RePolyglot members</h4>
 
+  
     <div class="container">
 
-    <% for(let user of users) {%>
 
-        <div class="card mb-3 col-md-4">
-            <div class="card-title">
-                <%= user.username %>
+         <% let count=3; %>
+       
+         <% for(let user of users) {%>
+            <% if(count == 3) {%>
+         <div class="row d-flex mb-3">
+            <% count=0; %>
+             <% } %>
+            <div class="col-md-4">
+                <div class="card p-3 py-4">
+                  
+                    <div class="mt-3">
+                        <h5 class="text-center mt-2 mb-0">
+                            <%= user.firstname %>
+                                <%= user.lastname %>
+                        </h5>
+                        <p class="text-center">
+                            @<%= user.username %>
+                        </p>
+                        <div class="px-4 mt-1">
+                            <p class="">Native: <%= user.nativeLanguage %></p>
+                        </div>
+
+                        <div class="row">
+                           <div class="d-block col-sm">
+                                   <p class="mb-0">   <%= user.tasks.length %></p>
+                                    <span class="text-muted"><small>Total tasks</small> </span>
+                            </div>
+
+                            <div class="d-block col-sm ms-4">
+                                   <p class="mb-0">   <%= user.languagesLearning[0] %></p>
+                                    <span class="text-muted"><small>Learning</small></span>
+                            </div>
+
+                            <% if(user.languagesLearning.length > 1)  { %>
+                            <div class="d-block col-sm ms-4">
+                                   <p class="mb-0">   <%= user.languagesLearning[1] %></p>
+                                    <span class="text-muted"><small>Also learning</small> </span>
+                            </div>
+
+                            <% } %>
+                           
+                          
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-primary">follow</button>
-
+             <% if(count==2) {%>
         </div>
-        <% } %>
+         <% } %>
 
-        </div>
+             <% count ++; %>
+                            <% } %>
+    </div>

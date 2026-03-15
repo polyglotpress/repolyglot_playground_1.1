@@ -1,48 +1,71 @@
 <% layout('layouts/boilerplate.ejs')%>
+    <link rel="stylesheet" href="/css/style1.css" />
 
-    <h4 class="mt-4">All tasks</h4>
-    <div>
-        <p> <a href="/tasks/new" class="link-primary link-underline-opacity-75">Create new task</a></p>
+
+    <!-- <div class="row mt-5">
+        <div class="col text-end">
+            <h4 class="d-inline">All tasks</h4>
+        </div>
+        <div class="col"> <a href="/tasks/new" class="btn btn-primary create-new ">Create new task</a></div>
+    </div> -->
+
+    <div class="title-container mt-3">
+
+        <h1 class="display-6">All tasks</h1>
+
+        <a href="/tasks/new" class="btn btn-primary create-new ">Create New</a>
     </div>
 
+    <div class="cont mt-5">
+        <div class="container">
 
-    <div class="container">
+            <% let count=4; %>
 
-        <% let count=3; %>
+                <% for (let task of tasks) { %>
 
-            <% for (let task of tasks) { %>
+                    <% if(count==4) {%>
 
-                <% if(count==3) {%>
+                        <div class="row mb-3">
+                            <% count=0; %>
+                                <% } %>
+                                    <div class="col-3">
 
-                    <div class="row mb-3">
-                        <% count=0; %>
-                            <% } %>
-                                <div class="col-4">
+                                        <div class="card border-dark h-100">
+                                            <div class="card-header text-lowercase">
+                                                in: <%= task.category || 'other' %>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="card-title"><strong>
+                                                        <!-- <a class="text-center text-decoration-none" -->
+                                                        <!-- href="/tasks/<%= task._id%>"> -->
+                                                        <%= task.title %>
+                                                            <!-- </a> -->
+                                                    </strong>
+                                                </p>
+                                                <p class="card-subtitle mb-2 text-muted"> by <%=
+                                                        task.creator.username %>
+                                                </p>
 
-                                    <div class="card border-dark h-100">
-                                        <div class="card-header border-dark bg-info">
-                                            #<%= task.category || 'other' %>
+                                            </div>
+                                            <div class="card-footer">
+                                                <a href="/tasks/<%= task._id%>"
+                                                    class="card-link btn btn-info mt-auto">View</a>
+
+                                                <!-- if you are the owner than edit -->
+                                                <% if(currentUser && task.creator.id == currentUser._id) { %>
+                                                    <a href="/tasks/<%= task._id %>/edit" class="card-link btn btn-info mt-auto">Edit</a>
+                                                    <% } %>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">
-                                                <!-- <a class="text-center text-decoration-none" -->
-                                                <!-- href="/tasks/<%= task._id%>"> -->
-                                                <%= task.title %>
-                                                    <!-- </a> -->
-                                            </h5>
-                                            <p class="card-subtitle mb-2 text-muted"> created by <%= task.creator.username %>
-                                            </p>
-                                            <a href="/tasks/<%= task._id%>" class="card-link">View</a>
-                                        </div>
+
                                     </div>
 
-                                </div>
+                                    <% if(count==3) {%>
+                        </div>
 
-                                <% if(count==2) {%>
-                    </div>
+                        <% } %>
+                            <% count ++; %>
+                                <% } %>
 
-                    <% } %>
-                        <% count ++; %>
-                            <% } %>
-
+        </div>
     </div>

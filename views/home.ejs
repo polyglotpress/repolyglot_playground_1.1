@@ -1,15 +1,14 @@
 <% layout('layouts/boilerplate.ejs')%>
 
-    <div class="container col-8 offset-2">
-        <h1 class="mt-5 text-center">RePolyglot:</h1>
-
-        <h5 class="text-center mt-4">Myself in mind, you benefit.</h5>
+    <div class="container col-8 offset-2 mt-5">
+        <h1 class="mt-5 text-center">Missing the Plot?</h1>
+        <h5 class="text-center mt-4">Structure, Motivate, <em>RePolyglot</em>.</h5>
 
         <!-- show below if user not logged in -->
         <% if(!currentUser) { %>
             <div class="d-flex justify-content-center">
-                <p><a class="btn btn-info m-3" href="/register">Sign Up</a></p>
-                <p><a class="btn btn-info m-3" href="/login">Log In</a></p>
+                <p><a class="register-btn btn m-3 " href="/register">Sign Up</a></p>
+                <p><a class="login-btn btn m-3 " href="/login">Log In</a></p>
             </div>
             <% } else {%>
                 <p>Hi <%= currentUser.firstname || currentUser.username %>!</p>
@@ -19,28 +18,71 @@
                     <section class="about-repolyglot">
                         <p id="about-repolyglot-1">
                             Re-Polyglot is a project providing aspiring autodidact polyglots
-                            with tools to progress in their language-learning mission.
+                            with tools to progress on their language-learning mission.
                         </p>
 
                         <p id="about-repolyglot-2">
-                            See and create learning tasks, track tasks with notes, and save to continue
-                            tomorrow. Customise your languages and mark tasks as completed. Add words or concepts
-                            you are struggling to memorise to a custom list to practice later.
-                            Be sure, the site provides you with task inpiration as a starting point.
+
+                            <ul>
+                                <li>Create an account</li>
+                                <li>Start building tasks</li>
+                                <li>Add notes to customise learning</li>
+                            </ul>
+                           
                         </p>
-                        <p>I am passionate about languages and always thought about how
-                            language courses and apps are not helpful for me. I learn in a completely
-                            different manner and at a faster pace.
-                            But since I often lack motivation or structure, I fail to progress in my mission
-                            towards hyperpolyglotism. That is why I coded this website.
-                        </p>
-                        <p id="about-repolyglot-3">
-                            This is not a language course. This is where you take your own course to success.
-                        </p>
-                        <p id="about-repolyglot-4">
-                            Re-Polyglot is here to help you, trust me - I built it for myself.
+                      
+                        <p class="lead">
+                            This is not a language course. This is your own course to success.
                         </p>
 
                     </section>
 
+                    <section>
+                        <div class="container">
+
+                            <div class="row">
+                            <div class="col-6 card">
+                                <div class="card-title mt-2 text-center">Create</div>
+                                <div class="card-body">Total tasks <%= tasksCount %> </div>
+                            </div>
+                            <div class="col-6 card">
+                                <div class="card-body">Track Progress</div>
+                            </div>
+                            <div class="col-6 card">
+                                <div class="card-body">Achieve goals</div>
+                            </div>
+                            <div class="col-6 card">
+                                <div class="card-body">Compete against <%= usersCount - 1 %> other RePolyglotters </div>
+                            </div>
+                            </div>
+                        </div>
+                    </section>
+<section>
+   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</section>
     </div>

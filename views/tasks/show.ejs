@@ -1,6 +1,9 @@
+
+<link rel="stylesheet" href="/css/styleEdit.css"/>
 <% layout('layouts/boilerplate.ejs')%>
+
     <div class="row mt-5" id="current-task-card-container">
-        <div class="col-6 offset-3">
+        <div class="col-8 offset-1">
             <div class="card">
                 <div class="card-body">
                     <div class="card-title"> Current task:
@@ -49,7 +52,7 @@
 
                         <%} else { %>
                             <form class="d-inline card-link" action="/tasks" method="POST">
-                                <button class="btn btn-primary">Add to tasks</a>
+                                <button class="add-task btn btn-primary">Add to tasks</a>
                             </form>
                             <% } %>
 
@@ -58,25 +61,8 @@
         </div>
     </div>
 
-    <!-- when starting task, hide all above and show all below -->
-
-
-    <!-- 
-    <div id="start-task-container" class="d-none mt-5">
-        <h5> <%= task.title %></h5>
-        <div id="task-notes">
-            <h6>Add note:</h6>
-            <form action="/tasks/<%= task._id %>/notes" method="POST">
-
-                <div class="mb-3">
-                    <label for="">Note:</label>
-                    <input type="text">
-                </div>
-                <button class="btn btn-primary">Save note</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="mt-5">
-        <a href="/tasks">Back to tasks list</a>
-    </div> -->
+     <div class="mt-5">
+        <p>
+        <a class="link-success" href="/tasks">Back to tasks list</a>
+        </p>
+    </div> 

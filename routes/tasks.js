@@ -6,7 +6,7 @@ const { listTasks, newTask, newTaskForm, showTask, getBeginTask, getEditTask, up
 
 router.get('/', listTasks); //currenlty sending to get edit profile
 router.post('/', isLoggedIn, newTask);
-router.get('/new', newTaskForm);
+router.get('/new', isLoggedIn, newTaskForm);
 
 router.get('/:id', showTask);
 router.get('/:id/start', isLoggedIn, getBeginTask);

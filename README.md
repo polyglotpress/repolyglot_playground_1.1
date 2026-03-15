@@ -1,8 +1,8 @@
-RePolyglot 1.0 </>
+**RePolyglot 1.0 </>**
 
 A motivation-based task app for aspiring polyglots who need structured nudges to keep progressing.
 
-🚀 Overview
+# Overview
 
 RePolyglot is a full-stack web application designed for self-directed language learners who sometimes lack inspiration or structure, those who, like me, have never benefited off language courses or apps.
 
@@ -10,77 +10,81 @@ Rather than being a full language-learning platform, this app focuses on pushing
 
 The goal is simple: push autodidacts into action.
 
-Tech Stack </>
+### Tech Stack </> ###
 
-Backend:
-Node.js
-Express.js
+**Backend**:
+- Node.js
+- Express.js
+- MongoDB
 
-Frontend:
-EJS
-Bootstrap 5
+<br>
 
-Database:
-MongoDB
+**Frontend**:
+- EJS
+- JavaScript
+- CSS
+- Bootstrap 5
 
-Other:
-Mongoose
+<br>
+
+**Other**:
+- Mongoose
+- Passport
+
+<br>
 
 
-Features </>
+**Features </>**
 
-User data stored in MongoDB
-Task generation system
-Task history tracking
-Server-side rendering using EJS
-Responsive UI built with Bootstrap
-RESTful route architecture
+- User authentication and authorisation
+- User data stored in MongoDB
+- MVC structured project
+- Server-side rendering using EJS
+- UI built with Bootstrap
+- Express routing
 
-🧠 Why I Built This
+## Why I Built This ##
 
-As an aspiring polyglot, I often found myself motivated but directionless. While many platforms teach languages, I struggled to find something that simply pushed me into consistent action.
+As an aspiring hyperpolyglot, I often found myself motivated but directionless. While there are many platforms teaching languages, I realised I don't need to be taught, just pushed.
 
 This project was built to solve that gap — focusing on momentum rather than instruction.
 
-⚙️ Installation & Setup
-
-Clone the repository:
-
-git clone https://github.com/yourusername/repolyglot1.0.git
-
-Navigate into the project directory:
-
-cd repolyglot_1.0_
-
-Install dependencies:
-
-npm install
-
-Create a .env file in the root directory and add:
-
-MONGO_URI=your_mongodb_connection_string
+### ⚙️ Installation & Setup ###
 
 
-Seed the database (optional):
-node seeds/index.js
 
-Run the development server:
+1. Open a terminal (git bash)
 
-npm run dev
+2. Clone the repository `git clone https://github.com/polyglotpress/repolyglot1.0.git`
 
-Open your browser and visit:
+3. Navigate into the project directory `cd repolyglot_1.0_`
 
-http://localhost:5000
+4. Install dependencies `npm install`
 
-🏗 Project Structure
+5. Create a .env file in the root directory and add:
+    - `MONGO_URI=your_mongodb_connection_string`
 
-/models        → Mongoose schemas
-/routes        → Express route handlers
-/views         → EJS templates
-/public        → Static files (CSS, JS, images)
-server.js         → Application entry point
+6. Seed the database `node seeds/index.js`
 
-Key Technical Decisions
+7. Run the development server `nodemon server.js`
+
+8. Open your browser and visit `http://localhost:5000`
+
+### Project Structure ###
+
+
+| Folder/file      |      Purpose                           |  
+|-------------|------------------------------------|
+| /models     |  Mongoose schemas for users and tasks| 
+| /routes     |    Express route handlers  |  
+| /controllers| Routing logic for HTTP requests |  
+| /seeds      |  Setting up the database with dummy data for a viewable project| 
+| /views      |    EJS templates  |  
+| /public     | Static files (CSS, JS) |   
+| server.js   | Application entry point |
+
+
+### Key Technical Decisions ###
 
 Used MongoDB for flexible task schema design and scalability.
 Implemented server-side rendering with EJS for simplicity and performance.
@@ -89,7 +93,7 @@ Separated concerns using MVC-inspired folder structure.
 Used environment variables to secure sensitive credentials.
 This shows you understand architecture — which is important for hiring managers.
 
-📈 Future Improvements
+## Future Improvements ##
 
 Add task difficulty levels
 Allow users to customize task categories
@@ -103,7 +107,7 @@ I
 The-Web-Developer-Bootcamp Udemy - Colt Steele
 YouTube MongoDB David something
 
-📚 What I Learned
+### What I Learned ###
 
 Designing a RESTful backend with Express
 Structuring a scalable Node.js project

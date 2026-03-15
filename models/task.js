@@ -10,10 +10,9 @@ const TaskSchema = new Schema({
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    completed: {type: Boolean, default: false}
 
 })
 
 module.exports = mongoose.model('Task', TaskSchema);
-
-//schema model for learning task provided or requested by user

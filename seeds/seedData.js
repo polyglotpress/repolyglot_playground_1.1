@@ -16,42 +16,42 @@ module.exports.seedUsers = [
     {
         firstname: "Lee",
         lastname: "Hammer",
+        password: "password",
         email: "leehammer@gmail.com",
         nativeLanguage: "English",
         languagesLearning: ["Spanish", "Hungarian"]
-       
     },
     {
         firstname: "Antonio",
         lastname: "Jueve",
+        password: "password",
         email: "antoniojueve@gmail.com",
         nativeLanguage: "Spanish",
         languagesLearning: ["English", "Portuguese", "Yiddish"]
-       
+
     },
     {
         firstname: "Elizabeth",
         lastname: "Smith",
+        password: "password",
         email: "lizsmith@email.fr",
         nativeLanguage: "French",
-       languagesLearning: ["Spanish", "Finnish"]
+        languagesLearning: ["Spanish", "Finnish"]
     },
     {
         firstname: "Lior",
         lastname: "Shahar",
+        password: "password",
         email: "lisha@email.com",
         nativeLanguage: "Hebrew",
         languagesLearning: ["English", "French"]
-       
-
     },
     {
         firstname: "Alexander",
         lastname: "Koplovitch",
+        password: "password",
         email: "alex123@gmail.com",
         nativeLanguage: "Russian",
         languagesLearning: ["English"]
-        
-
     }
 ]

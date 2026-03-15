@@ -1,0 +1,40 @@
+body {
+    background-color: #FFD786;
+    color: #2c3e50
+}
+
+.cont {
+
+}
+
+.card {
+    background-color: #519A66;
+    border: 2px solid black;
+}
+
+.create-new {
+    background-color: #237227;
+    color: white;
+    border: 1px solid black;
+   
+}
+
+.create-new:hover {
+    background-color: #519A66;
+}
+
+
+.card-link {
+  background-color: #FFAA00;
+  border: 1px solid black;
+}
+
+.card-footer {
+    background-color: #237227;
+}
+
+.title-container {
+display: flex;           /* horizontal layout */
+  align-items: center;     /* vertical alignment */
+  gap: 2rem;               /* space between title and button */
+}

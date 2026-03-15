@@ -1,34 +1,12 @@
+<link rel="stylesheet" href="/css/styleDashboard.css" />
 <% layout('layouts/boilerplate.ejs')%>
-
-
-    <!-- user languages learning list
-
-    user tasks link
-    user vocab to learn list (from chrome extension)
-
-
-    <ul> stats
-        <li>total tasks completed</li>
-        <li>days since registration</li>
-
-    </ul> -->
 
     <div class="container">
         <div class="main-body">
 
-            <!-- Breadcrumb -->
-            <!-- <nav aria-label="breadcrumb" class="main-breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">User</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-            </nav> -->
-            <!-- /Breadcrumb -->
-
             <div class="row mt-5">
                 <div class="col-md-4 mb-3">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <!-- <img src="" alt="profile pic" class="rounded-circle" width="150"> -->
@@ -36,7 +14,7 @@
                                     <h4>
                                         <%=user.username%>
                                     </h4>
-                                    <p class="text-secondary mb-3">Aspiring Hyperpolyglot</p>
+                                    <p class="text-secondary mb-3">Aspiring Polyglot</p>
                                     <!-- <p class="text-muted font-size-sm">bla bloa bla</p> -->
                                     <% if(currentUser && !user.equals(currentUser._id)) { %>
                                         <button class="btn btn-primary">Follow</button>
@@ -84,7 +62,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-warning" href="/<%= user._id %>">Edit</a>
+                                    <a class="btn btn-warning" href="/<%= user._id %>/edit">Edit</a>
                                     <button class="btn btn-danger" id="delete-profile" data-bs-toggle="modal"
                                         data-bs-target="#myModal">Delete</button>
                                 </div>
@@ -102,10 +80,10 @@
 
             <!--  -->
 
-            <div class="row mt-5">
+            <div class="row mt-32">
 
-                <div class="col-md-8">
-                    <div class="card mb-3">
+                <div class="col-md-6">
+                    <div class="card mb-2 h-100">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
@@ -115,48 +93,73 @@
 
                                     <% for(let language of user.languagesLearning) { %>
                                         <p>
-                                            Learning: <%= language %>
+                                            <%= language %>
                                         </p>
                                         <% } %>
                                 </div>
                                 <div class="col-sm-12">
                                     <a class="btn btn-primary" href="/<%= user._id %>/languages/new">Add Language</a>
-                                    <a class="btn btn-warning" id="edit-languages">Edit Languages</a>
+                                    <!-- <a class="btn btn-warning" id="edit-languages">Edit Languages</a> -->
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
+                                    <h6 class="mb-0">Tasks</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <%= user.email %>
+
+                                    <% for(let task of user.tasks) { %>
+
+                                        <p>
+                                            <%= task.title %>
+                                        </p>
+                                          <p>
+                                            <%= task.language %>
+                                        </p>
+                                        <% } %>
+
+                                          <p>
+                                           total tasks: <%= user.tasks.length %>
+                                        </p>
+                                            <!-- <%= user.tasks %> -->
                                 </div>
                             </div>
-                            <hr>
-
-
+         
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-md-6">
+                    <div class="card mb-3 h-100">
+                        <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Native Language</h6>
+                                <div class="text-center">
+                                    <h6 class="mb-0">Words list</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <%= user.nativeLanguage %>
+
+                                   
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-warning" href="/<%= user._id %>">Edit</a>
-                                    <button class="btn btn-danger" id="delete-profile" data-bs-toggle="modal"
-                                        data-bs-target="#myModal">Delete</button>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-sm-6" id="verify-delete-box">
-                                    </div>
+                                     <a class="btn btn-primary" href="#"> + </a>
+                                    <!-- <a class="btn btn-primary" href="#">Add Word</a>
+                                  <a class="btn btn-primary" href="#">My list 1</a>
+                                  <a class="btn btn-primary" href="#">My list 2</a> -->
+                                  
                                 </div>
                             </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Stats</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+
+                                  
+                                </div>
+                            </div>
+         
                         </div>
                     </div>
                 </div>
