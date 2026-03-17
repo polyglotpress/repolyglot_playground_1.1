@@ -1,5 +1,4 @@
 const express = require('express');
-
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
@@ -15,10 +14,12 @@ require('dotenv').config({ path: path.resolve(__dirname, './.env') }); //
 const User = require('./models/user');
 const Task = require('./models/task');
 const Tip = require('./models/tip');
+
 //routes
 const taskRoutes = require('./routes/tasks');
 const userRoutes = require('./routes/users');
 
+//middleware
 const { isLoggedIn } = require('./middleware/middleware');
 
 //database connection
@@ -30,12 +31,18 @@ mongoose.connect(MONGO_URL, { family: 4 })
     .catch(err => {
         console.error("connection errorL ", err);
     });
-// mongoose.connection.on("error", console.error.bind(console, "connection error:"));
-// mongoose.connection.once("open", () => {
-//     console.log("Database connected");
-// })
 
 const app = express();
+
+//socket.io
+// const http = require('http');
+// const server = http.createServer(app);
+// const { Server } = require('socket.io');
+// const io = new Server(server);
+
+
+
+
 
 app.set('view engine', 'ejs'); //
 app.set('views', path.join(__dirname, 'views'));
@@ -50,12 +57,6 @@ app.use(session({
     secret: 'terrible app secret',
     saveUninitialized: false,
     resave: false,
-    // cookie: {
-    //     httpOnly: true,
-    //     secure: false, //for http connections
-    //     maxAge: 360000,
-    //     expires: new Date(Date.now() + 360000)
-    // }
 }));
 
 app.use(flash());
@@ -81,10 +82,8 @@ app.use(methodOverride('_method'));
 app.use('/tasks', taskRoutes);
 app.use('/', userRoutes); //  not /users
 
-
 //routes visible to everyone:
 
-//1. application home page
 app.get('/', async (req, res) => {
     const tasksCount = await Task.countDocuments();
     const usersCount = await User.countDocuments();
@@ -98,7 +97,6 @@ app.get('/tips', async (req, res) => {
 
 app.post('/tips', isLoggedIn, async (req, res) => {
     const tip = new Tip({ ...req.body });
-
     const user = await User.findById(req.user._id);
     console.log("user creating this tip is : " + user);
     console.log(req.body);
@@ -106,9 +104,7 @@ app.post('/tips', isLoggedIn, async (req, res) => {
     if (req.body.anonymousCheckbox == 'on') {
         tip.isAnonymous = true;
     }
-    console.log("tip author "+ tip.author);
     await tip.save();
-    console.log("tip saved is " + tip);
     res.redirect('/tips');
 })
 
@@ -125,10 +121,24 @@ app.get('/secret', (req, res) => {
 // })
 
 
+//////socket
+// io.on('connection', (socket) => {
+//     console.log('a user connected: ', socket.id);
+//     socket.on('disconnect', () => {
+//         console.log("user disconnected ", socket.id);
+//     })
+// })
+
+
 // port to host server
 const PORT = process.env.PORT || 5000;
 
 // server setup
 app.listen(PORT, console.log(
     `Server listening on port ${PORT}`));
+
+
+    // server.listen(PORT, console.log(
+    // `Server listening on port ${PORT}`));
+
 

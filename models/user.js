@@ -23,7 +23,10 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Task'
     }] //array of tasks per user
-})
+},
+    {timestamps : true} //now has user.createdAt and user.updatedAt :)
+
+)
 
 UserSchema.plugin(passportLocalMongoose.default); //username and password
 

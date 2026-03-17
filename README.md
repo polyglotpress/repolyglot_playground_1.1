@@ -1,22 +1,21 @@
-**RePolyglot 1.0 </>**
+**RePolyglot**
 
 A motivation-based task app for aspiring polyglots who need structured nudges to keep progressing.
 
 # Overview
 
-RePolyglot is a full-stack web application designed for self-directed language learners who sometimes lack inspiration or structure, those who, like me, have never benefited off language courses or apps.
+RePolyglot is a full-stack web application designed for self-directed language learners who sometimes lack inspiration or structure, those who - like me - have never benefited off language courses or apps.
 
-Rather than being a full language-learning platform, this app focuses on pushing self-learning. Users receive randomly generated learning tasks (e.g., “Learn 15 new verb infinitives”) to encourage consistent progress. They can also create their own tasks, as my belief is they know themselves best.
+Rather than being a full language-learning platform, this app focuses on pushing self-learning. Users create learning tasks (e.g. “Learn 15 new verb infinitives”) to encourage consistent progress. In a couple of commits from now, I hope to implement randomly generated tasks for user inspiration.
 
-The goal is simple: push autodidacts into action.
+The goal is simple: push autodidacts to progress towards their goals.
 
-### Tech Stack </> ###
+## Tech Stack </> ##
 
 **Backend**:
-- Node.js
-- Express.js
+- Node.js (Common JS)
+- Express
 - MongoDB
-
 <br>
 
 **Frontend**:
@@ -24,49 +23,43 @@ The goal is simple: push autodidacts into action.
 - JavaScript
 - CSS
 - Bootstrap 5
-
 <br>
 
 **Other**:
 - Mongoose
 - Passport
-
 <br>
 
 
-**Features </>**
+## Features ##
 
-- User authentication and authorisation
-- User data stored in MongoDB
+- User authentication and authorisation middleware
+- User data stored in MongoDB 
 - MVC structured project
 - Server-side rendering using EJS
-- UI built with Bootstrap
+- Responsive UI built with Bootstrap and CSS
 - Express routing
 
-## Why I Built This ##
 
-As an aspiring hyperpolyglot, I often found myself motivated but directionless. While there are many platforms teaching languages, I realised I don't need to be taught, just pushed.
+## Installation & Setup ##
 
-This project was built to solve that gap — focusing on momentum rather than instruction.
-
-### ⚙️ Installation & Setup ###
+You must have Node and Git installed on your computer in order to run this project.
 
 
+1. Open a terminal 
 
-1. Open a terminal (git bash)
+2. Clone the repository `git clone https://github.com/polyglotpress/repolyglot_playground_1.1.git`
 
-2. Clone the repository `git clone https://github.com/polyglotpress/repolyglot1.0.git`
-
-3. Navigate into the project directory `cd repolyglot_1.0_`
+3. Navigate into the project directory `cd repolyglot_playground_1.1`
 
 4. Install dependencies `npm install`
 
-5. Create a .env file in the root directory and add:
+5. Create a .env file in the root directory and add your MongoDB connection string:
     - `MONGO_URI=your_mongodb_connection_string`
 
 6. Seed the database `node seeds/index.js`
 
-7. Run the development server `nodemon server.js`
+7. Run the server `node server.js`
 
 8. Open your browser and visit `http://localhost:5000`
 

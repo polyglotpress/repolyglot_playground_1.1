@@ -21,7 +21,7 @@ module.exports.isLoggedIn = (req, res, next) => {
 }
 
 module.exports.isAccountHolder = async (req, res, next) => {
-      console.log("is account holder in called");
+      console.log("is account holder is called");
     try {
         const user = await User.findById(req.params.id);
         if (!user._id.equals(req.user.id)) {

@@ -28,20 +28,21 @@ body{
     width: 80%;
     padding: 15px;
     border-radius: 4px;
+    background-color: white;
 }
 
 .alert-success {
     border: 2px solid #237227;
-    background-color: #FFD786;
+    /* background-color: #FFD786; */
     color: #237227;
 }
 
 .alert-danger {
     /* color: #721c24;
     background-color: #f8d7da; */
-    border: 1px solid red;
+    border: 2px solid red;
     color:red;
-     background-color: #FFD786;
+     /* background-color: #FFD786; */
 }
 
 .navbar-light {
