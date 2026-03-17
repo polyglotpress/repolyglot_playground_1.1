@@ -59,19 +59,23 @@
                                     <%= user.nativeLanguage %>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a class="btn btn-warning" href="/<%= user._id %>/edit">Edit</a>
-                                    <button class="btn btn-danger" id="delete-profile" data-bs-toggle="modal"
-                                        data-bs-target="#myModal">Delete</button>
-                                </div>
+                            
 
+                            <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                                <hr>
                                 <div class="row">
-                                    <div class="col-sm-6" id="verify-delete-box">
+                                    <div class="col-sm-12">
+                                        <a class="btn btn-warning" href="/<%= user._id %>/edit">Edit</a>
+                                        <button class="btn btn-danger" id="delete-profile" data-bs-toggle="modal"
+                                            data-bs-target="#myModal">Delete</button>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6" id="verify-delete-box">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <% } %>
                         </div>
                     </div>
                 </div>
@@ -97,10 +101,14 @@
                                         </p>
                                         <% } %>
                                 </div>
+
+                                  <% if(currentUser && user._id.equals(currentUser._id)) { %>
                                 <div class="col-sm-12">
                                     <a class="btn btn-primary" href="/<%= user._id %>/languages/new">Add Language</a>
                                     <!-- <a class="btn btn-warning" id="edit-languages">Edit Languages</a> -->
                                 </div>
+
+                                   <% } %>
                             </div>
                             <hr>
                             <div class="row">
@@ -114,22 +122,22 @@
                                         <p>
                                             <%= task.title %>
                                         </p>
-                                          <p>
+                                        <p>
                                             <%= task.language %>
                                         </p>
                                         <% } %>
 
-                                          <p>
-                                           total tasks: <%= user.tasks.length %>
-                                        </p>
+                                            <p>
+                                                total tasks: <%= user.tasks.length %>
+                                            </p>
                                             <!-- <%= user.tasks %> -->
                                 </div>
                             </div>
-         
+
                         </div>
                     </div>
                 </div>
-                  <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="card mb-3 h-100">
                         <div class="card-body">
                             <div class="row">
@@ -138,16 +146,19 @@
                                 </div>
                                 <div class="col-sm-9 text-secondary">
 
-                                   
+
                                 </div>
+
+                                 <% if(currentUser && user._id.equals(currentUser._id)) { %>
                                 <div class="col-sm-12">
 
-                                     <a class="btn btn-primary" href="#"> + </a>
+                                    <a class="btn btn-primary" href="#"> + </a>
                                     <!-- <a class="btn btn-primary" href="#">Add Word</a>
                                   <a class="btn btn-primary" href="#">My list 1</a>
                                   <a class="btn btn-primary" href="#">My list 2</a> -->
-                                  
+
                                 </div>
+                                <% } %>
                             </div>
                             <hr>
                             <div class="row">
@@ -156,10 +167,10 @@
                                 </div>
                                 <div class="col-sm-9 text-secondary">
 
-                                  
+
                                 </div>
                             </div>
-         
+
                         </div>
                     </div>
                 </div>

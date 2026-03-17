@@ -32,7 +32,16 @@ router.get('/:id/languages/new', async (req, res) => {
 router.post('/:id/languages', async (req, res) => {
     console.log("body is: ",req.body); //{ user: { addedLanguage: 'Russian' } }
     const user = await User.findById(req.params.id);
-    user.languagesLearning.push(req.body.user.addedLanguage || req.body.userSearch);
+    let newLanguage;
+
+    if (req.body.userSearch) {
+         newLanguage = req.body.userSearch;
+    }
+    else {
+         newLanguage = req.body.user.addedLanguage;
+    }
+    
+    user.languagesLearning.push(newLanguage);
     await user.save();
     req.flash('success', 'language added to learning list');
     res.redirect(`/${user._id}/dashboard`);

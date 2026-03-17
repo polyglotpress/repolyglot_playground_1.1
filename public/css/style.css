@@ -1,3 +1,28 @@
+/* all views */
+
+body{
+    background-color: #FFD786;
+    color: #2c3e50;
+    margin-top: 50px;
+}
+
+
+#tip-details{
+    height: 250px;
+}
+/* all cards */
+
+/* .card {
+    background-color: #519A66;
+    border: 2px solid black;
+} */
+
+.update-profile-btn{
+     background-color: #237227;
+    color: white;
+    border: 1px solid black;
+}
+
 
 .alert {
     width: 80%;
@@ -6,13 +31,17 @@
 }
 
 .alert-success {
-    border: 1px solid #c3e6cb;
+    border: 2px solid #237227;
+    background-color: #FFD786;
+    color: #237227;
 }
 
 .alert-danger {
     /* color: #721c24;
     background-color: #f8d7da; */
-    border: 1px solid #f5c6cb;
+    border: 1px solid red;
+    color:red;
+     background-color: #FFD786;
 }
 
 .navbar-light {
@@ -27,19 +56,13 @@
 }
 
 
-body{
-    background-color: #E3DCD2;
-    color: #100C0D;
-    margin-top: 50px;
-}
+
 /* 
 login style */
 
 .login-body, .register-body{
     background-color: #FFD786;
     color: #2c3e50;
-    border-radius: 4px;
-    border: 1px solid black;
     margin-top: 15px;
 }
 

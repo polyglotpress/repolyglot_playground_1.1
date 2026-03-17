@@ -3,31 +3,34 @@
 <% layout('layouts/boilerplate.ejs')%>
 
     <!-- <main class="container mt-5"> -->
-    <h1 class="display-6 mt-5" id="new-title">Add task:</h1>
+    <h1 class="display-6 text-center mt-5" id="new-title">Add task:</h1>
 
+    <div class="col-8 offset-2">
     <div class="form-div mt-4">
         <form action="/tasks" method="POST" id="new-form" autocomplete="off">
 
             <div class="form-group form-floating">
-               
+
                 <input id="task-title" class="form-control" type="text" name="task[title]"
                     placeholder="e.g. learn 15 new verb infinitives" required>
-                     <label class="form-label" for="task-title">Task title</label>
+                <label class="form-label" for="task-title">Task title</label>
             </div>
             <div class="form-group mt-3 form-floating">
-               
-                <textarea id="task-description" class="form-control" rows="3" name="task[description]" placeholder="Describe the task"></textarea>
-                 <label class="form-label" for="task-description">Describe the task</label>
+
+                <textarea id="task-description" class="form-control" rows="3" name="task[description]"
+                    placeholder="Describe the task"></textarea>
+                <label class="form-label" for="task-description">Describe the task</label>
             </div>
             <div class="form-group mt-3 form-floating">
-                
-                <input id="task-category" class="form-control" type="text" name="task[category]" placeholder="task Category">
+
+                <input id="task-category" class="form-control" type="text" name="task[category]"
+                    placeholder="task Category">
                 <label class="form-label" for="task-category">Category:</label>
             </div>
             <div class="form-group mt-3 form-floating">
 
 
-                <select multiple class="form-control" name="task[language]" id="task-language" >
+                <select multiple class="form-control" name="task[language]" id="task-language">
                     <% for (let lang of languages ){ %>
                         <option value="<%= lang %>">
                             <%= lang %>
@@ -38,13 +41,13 @@
 
                                 <!-- </option> -->
                 </select>
-                
+
                 <label for="task-language">Target language:</label>
-               
+
             </div>
 
-             <button class="add-lang-btn mt-2" id="adding-language" data-bs-toggle="modal" data-bs-target="#newLanguageModal"> Add new
-                    Language</button>
+            <button class="add-lang-btn mt-2" id="adding-language" data-bs-toggle="modal"
+                data-bs-target="#newLanguageModal"> + </button>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button id="new-button" class="add-task-btn btn btn-dark mb-2 mt-5">Add task</button>
@@ -53,6 +56,7 @@
         </form>
 
 
+    </div>
     </div>
     <p><a class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/tasks">back
             to tasks</a></p>
@@ -64,25 +68,27 @@
     </div> -->
 
     <div class="modal fade" id="newLanguageModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add new language:</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    Select new language:
-                    <select id="new-language-select">
+        <form id="add-language" action="/<%= user._id %>/languages" method="POST">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add new language:</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        Select new language:
+                        <select id="new-language-select">
 
-                    </select>
-                    <div><label>Search</label><input type="text" id="user-search" name="userSearch"/></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
-                    <form id="add-language" action="<%= user._id %>/languages/new" method="POST">
+                        </select>
+                        <div><label>Search</label><input type="text" id="user-search" name="userSearch" /></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
+                        <!-- <form id="add-language" action="/<%= user._id %>/languages" method="POST"> -->
                         <button type="submit" class="btn btn-primary">Add to profile</button>
-                    </form>
+                        <!-- </form> -->
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>

@@ -1,0 +1,16 @@
+Dashboard
+
+- Add Language button make into select
+
+- user langauges array check that can't have two the same
+
+- fix languages names until hyphen
+
+- set website to have Spanish
+
+- dashboard styling
+
+- user remove languages, changes all task to unspecified language task
+
+- members cards
+

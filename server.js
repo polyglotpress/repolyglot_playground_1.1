@@ -14,12 +14,12 @@ require('dotenv').config({ path: path.resolve(__dirname, './.env') }); //
 //models
 const User = require('./models/user');
 const Task = require('./models/task');
-
+const Tip = require('./models/tip');
 //routes
 const taskRoutes = require('./routes/tasks');
 const userRoutes = require('./routes/users');
 
-
+const { isLoggedIn } = require('./middleware/middleware');
 
 //database connection
 let MONGO_URL = process.env.MONGO_URI;
@@ -88,7 +88,28 @@ app.use('/', userRoutes); //  not /users
 app.get('/', async (req, res) => {
     const tasksCount = await Task.countDocuments();
     const usersCount = await User.countDocuments();
-    res.render('home', { tasksCount, usersCount})
+    res.render('home', { tasksCount, usersCount })
+})
+
+app.get('/tips', async (req, res) => {
+    const tips = await Tip.find({}).populate('author'); 
+    res.render('polyglottips', { tips });
+})
+
+app.post('/tips', isLoggedIn, async (req, res) => {
+    const tip = new Tip({ ...req.body });
+
+    const user = await User.findById(req.user._id);
+    console.log("user creating this tip is : " + user);
+    console.log(req.body);
+    tip.author = req.user._id;
+    if (req.body.anonymousCheckbox == 'on') {
+        tip.isAnonymous = true;
+    }
+    console.log("tip author "+ tip.author);
+    await tip.save();
+    console.log("tip saved is " + tip);
+    res.redirect('/tips');
 })
 
 app.get('/secret', (req, res) => {

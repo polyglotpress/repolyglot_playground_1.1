@@ -1,7 +1,7 @@
-body {
+/* body {
     background-color: #FFD786;
     color: #2c3e50
-}
+} */
 
 .cont {
 
@@ -34,7 +34,7 @@ body {
 }
 
 .title-container {
-display: flex;           /* horizontal layout */
-  align-items: center;     /* vertical alignment */
+display: flex;          
+  align-items: center;     
   gap: 2rem;               /* space between title and button */
 }
