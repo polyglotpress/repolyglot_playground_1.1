@@ -14,3 +14,13 @@ Dashboard
 
 - members cards
 
+- style tips page
+
+- add words lists per user
+
+- chrome extension
+
+- add timer feature
+
+-redis cache unsaved forms?
+

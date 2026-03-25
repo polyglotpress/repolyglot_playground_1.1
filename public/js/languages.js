@@ -1,11 +1,4 @@
-
-setTimeout(() => {
-    document.querySelectorAll('.alert').forEach(alert => alert.style.display = 'none');
-}, 3000); // Hides flash messages after 3 seconds
-
-console.log("JS loaded from public");
-
-const languages = [
+module.exports.languages = [
     { name: "Afrikaans", code: "af" },
     { name: "Albanian", code: "sq" },
     { name: "Amharic", code: "am" },
@@ -105,65 +98,3 @@ const languages = [
     { name: "Yoruba ", code: "yo" },
     { name: "Zulu", code: "zu" }
 ];
-
-const addLanguageInNewTaskFormBtn = document.querySelector("#adding-language");
-
-
-if (addLanguageInNewTaskFormBtn) {
-    addLanguageInNewTaskFormBtn.addEventListener("click", () => {
-        console.log("adding clicked");
-        // document.querySelector("#newLanguageModal").show();
-
-        for (let l of languages) {
-            const d = document.createElement('option');
-            d.value = l.name;
-            d.textContent = l.name;
-            document.querySelector("#new-language-select").appendChild(d);
-        }
-        const myThing = document.querySelector("#new-language-select");
-        myThing.addEventListener("change", () => {
-            document.querySelector("#user-search").value = myThing.value;
-        })
-
-    })
-    
-}
-
-const userSearchLanguage = document.querySelector("#user-search");
-
-if (userSearchLanguage) {
-    userSearchLanguage.addEventListener("input", (event) => {
-        document.querySelector("#new-language-select").innerHTML = "";
-        let arr = [];
-        for (let l of languages) {
-            if (l.name.toLowerCase().indexOf(userSearchLanguage.value) !== -1) { //
-                arr.push(l);
-                const d = document.createElement('option');
-                d.value = l.name;
-                d.textContent = l.name;
-                document.querySelector("#new-language-select").appendChild(d);
-            }
-        }
-
-    })
-}
-
-// const form = document.querySelector("#login-form")
-// const inputs = form.querySelectorAll("input")
-
-// inputs.forEach(input => {
-//   const errorContainerID = `${input.name}Error`
-//   const errorContainer = document.getElementById(errorContainerID)
-//   input.addEventListener("invalid", (e) => {
-//     // Stop the browser from displaying the default error messages
-//     e.preventDefault()
-//     errorContainer.innerText = input.validationMessage
-//   })
-// })
-
-//dismiss new tip modal on submit
-
-// const postTipBtn = document.querySelector("#submit-tip");
-// postTipBtn.addEventListener("click", () => {
-//    document.querySelector("#add-tip-modal").modal('hide');
-// })

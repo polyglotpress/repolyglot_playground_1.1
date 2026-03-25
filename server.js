@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+//const { createClient } = require('redis');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const bodyParser = require('body-parser');
@@ -34,16 +35,6 @@ mongoose.connect(MONGO_URL, { family: 4 })
 
 const app = express();
 
-//socket.io
-// const http = require('http');
-// const server = http.createServer(app);
-// const { Server } = require('socket.io');
-// const io = new Server(server);
-
-
-
-
-
 app.set('view engine', 'ejs'); //
 app.set('views', path.join(__dirname, 'views'));
 app.engine('ejs', ejsMate);
@@ -76,7 +67,6 @@ app.use((req, res, next) => {
     next();
 })
 
-
 app.use(methodOverride('_method'));
 
 app.use('/tasks', taskRoutes);
@@ -91,7 +81,7 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/tips', async (req, res) => {
-    const tips = await Tip.find({}).populate('author'); 
+    const tips = await Tip.find({}).populate('author');
     res.render('polyglottips', { tips });
 })
 
@@ -108,37 +98,32 @@ app.post('/tips', isLoggedIn, async (req, res) => {
     res.redirect('/tips');
 })
 
-app.get('/secret', (req, res) => {
-    if (!req.isAuthenticated()) {
-        req.flash('error', 'you must be logged in');
-        return res.redirect('/login');
+// app.get('/secret', (req, res) => {
+//     if (!req.isAuthenticated()) {
+//         req.flash('error', 'you must be logged in');
+//         return res.redirect('/login');
+//     }
+//     res.send("you can access this");
+// })
+
+
+app.get('/list/:id', async (req, res) => {
+    const currentUser = req.user;
+    const user = await User.findOne({
+        'wordLists._id': req.params.id
+    });
+    if (!user) {
+        return res.status(404).send("user not found");
     }
-    res.send("you can access this");
-})
+    const wordList = user.wordLists.id(req.params.id);
+   // res.render('users/wordList', { wordList, user, currentUser }); //toggle offcanvas instead
+});
 
 // app.all("*", (req, res) => {
 //     res.status(404).render("404");
 // })
 
-
-//////socket
-// io.on('connection', (socket) => {
-//     console.log('a user connected: ', socket.id);
-//     socket.on('disconnect', () => {
-//         console.log("user disconnected ", socket.id);
-//     })
-// })
-
-
-// port to host server
 const PORT = process.env.PORT || 5000;
 
-// server setup
 app.listen(PORT, console.log(
     `Server listening on port ${PORT}`));
-
-
-    // server.listen(PORT, console.log(
-    // `Server listening on port ${PORT}`));
-
-

@@ -28,10 +28,10 @@ module.exports.loginForm = ((req, res) => {
 
 module.exports.logUserIn = ((req, res) => {
     console.log("session returnTo: ", req.session.returnTo);
-      console.log("session id: ", req.sessionID);
+    console.log("session id: ", req.sessionID);
     req.flash('success', 'Welcome back to RePolyglot');
     // const redirectUrl = req.session.returnTo || `/${req.user._id}/dashboard`;
-     const redirectUrl = res.locals.returnTo || `/${req.user._id}/dashboard`;
+    const redirectUrl = res.locals.returnTo || `/${req.user._id}/dashboard`;
     //delete req.session.returnTo;
     res.redirect(redirectUrl);
 })
@@ -55,15 +55,13 @@ module.exports.loadDashboard = (
         } catch (err) {
             console.log(err.message);
         }
-    }
-)
+    })
 
 module.exports.getEditProfile = (
     async (req, res) => {
         const user = await User.findById(req.params.id);
         res.render('users/editprofile', { user });
     })
-
 
 module.exports.updateProfile = ( //this isn't actually updating details
     async (req, res) => {
@@ -86,4 +84,38 @@ module.exports.listMembers = (
     async (req, res) => {
         const users = await User.find({});
         res.render('members', { users });
+    })
+
+module.exports.getNewLanguage = (
+    async (req, res) => {
+        const user = await User.findById(req.params.id);
+        res.render('users/newlanguage', { user });
+    })
+
+module.exports.postNewLanguage = (
+    async (req, res) => {
+        console.log("body is: ", req.body); //{ user: { addedLanguage: 'Russian' } }
+        const user = await User.findById(req.params.id);
+        let newLanguage;
+        let redirectUrl; //fix to redirect to new task or dashboard
+
+        if (req.body.userSearch) {
+            newLanguage = req.body.userSearch;
+        }
+        else {
+            newLanguage = req.body.user.addedLanguage;
+        }
+//if language doesn't exist yet
+        user.languagesLearning.push(newLanguage);
+        await user.save();
+        req.flash('success', 'language added to learning list');
+        res.redirect(`/${user._id}/dashboard`);
+    })
+
+module.exports.deleteLanguage = (
+    async (req, res) => {
+        const user = await User.findByIdAndUpdate(req.params.id, {
+            $pull: { languagesLearning: req.body.lang }
+        }, { new: true });
+        res.redirect(`/${user._id}/dashboard`);
     })

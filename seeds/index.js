@@ -42,7 +42,7 @@ const seedDB = async () => {
         const randomUser = newUsers[Math.floor(Math.random() * newUsers.length)];
 
         const task = new Task({
-            title: seedTask.title,
+            title: seedTask,
             category: "General",
             description: "No description yet",
             language: "Any",

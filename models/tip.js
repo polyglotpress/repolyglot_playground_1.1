@@ -13,7 +13,8 @@ const TipSchema = new Schema({
     isAnonymous: {
         type: Boolean,
         default: false
-    }
+    },
+    hashtags:[String]
    
 },
 {timestamps : true}

@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="/css/styleDashboard.css" />
+<script src="/js/dashboard.js"> defer</script>
+
+
 <% layout('layouts/boilerplate.ejs')%>
 
     <div class="container">
@@ -14,12 +17,13 @@
                                     <h4>
                                         <%=user.username%>
                                     </h4>
-                                    <p class="text-secondary mb-3">Aspiring Polyglot</p>
+                                    <p class="text-secondary mb-3">
+                                        <%= user.about || "Aspiring Polyglot" %>
+                                    </p>
                                     <!-- <p class="text-muted font-size-sm">bla bloa bla</p> -->
                                     <% if(currentUser && !user.equals(currentUser._id)) { %>
                                         <button class="btn btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button>
-
                                         <% } %>
                                 </div>
                             </div>
@@ -32,7 +36,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Full Name</h6>
+                                    <h6 class="mb-0">Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <%= user.firstname %>
@@ -59,7 +63,7 @@
                                     <%= user.nativeLanguage %>
                                 </div>
                             </div>
-                            
+
 
                             <% if(currentUser && user._id.equals(currentUser._id)) { %>
                                 <hr>
@@ -91,24 +95,26 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Languages aquiring:</h6>
+                                    <h6 class="mb-0">Learning: </h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
 
                                     <% for(let language of user.languagesLearning) { %>
-                                        <p>
-                                            <%= language %>
-                                        </p>
+                                        <form action="/<%=user._id%>/languages?_method=DELETE" method="POST">
+                                            <input class="" name="lang" readonly value="<%= language %>" />
+
+                                            <button class="btn btn-danger" type="submit">X</button>
+                                        </form>
                                         <% } %>
                                 </div>
 
-                                  <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                                <div class="col-sm-12">
-                                    <a class="btn btn-primary" href="/<%= user._id %>/languages/new">Add Language</a>
-                                    <!-- <a class="btn btn-warning" id="edit-languages">Edit Languages</a> -->
-                                </div>
+                                <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                                    <div class="col-sm-12">
+                                        <a class="btn btn-primary" href="/<%= user._id %>/languages/new">+</a>
+                                        <!-- <a class="btn btn-warning" id="edit-languages">Edit Languages</a> -->
+                                    </div>
 
-                                   <% } %>
+                                    <% } %>
                             </div>
                             <hr>
                             <div class="row">
@@ -128,12 +134,11 @@
                                         <% } %>
 
                                             <p>
-                                                total tasks: <%= user.tasks.length %>
+                                                total: <%= user.tasks.length %>
                                             </p>
-                                            <!-- <%= user.tasks %> -->
+
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -144,31 +149,71 @@
                                 <div class="text-center">
                                     <h6 class="mb-0">Words list</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
 
+                                <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                                    <div class="col-sm-12">
 
-                                </div>
+                                        <button class="btn" id="" data-bs-toggle="modal"
+                                            data-bs-target="#newWordListModal"> + </button>
+                                    </div>
+                                    <% } %>
+                                        <% if(user.wordLists.length> 0) { %>
+                                            <div>
+                                                <% for(let wordList of user.wordLists) { %>
+                                                    <p>
+                                                        <button class="btn btn-primary word-list-link" type="button"
+                                                            data-bs-toggle="offcanvas"
+                                                            data-bs-target="#offcanvas-<%= wordList._id %>"
+                                                            aria-controls="offcanvas-<%= wordList._id %>">
+                                                            <%= wordList.name %> (<%= wordList.language %>)
+                                                        </button>
+                                                        <!-- href="/list/<%= wordList._id %>"  -->
+                                                    </p>
 
-                                 <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                                <div class="col-sm-12">
+                                                    <!-- off canvas -->
+                                                    <div class="offcanvas offcanvas-start" tabindex="-1"
+                                                        id="offcanvas-<%= wordList._id %>"
+                                                        aria-labelledby="offcanvasLabel-<% wordList._id %>">
+                                                        <div class="offcanvas-header">
+                                                            <h5 class="offcanvas-title"
+                                                                id="offcanvasLabel-<% wordList._id %>">List:
+                                                                <%= user.username %>
+                                                            </h5>
+                                                            <button type="button" class="btn-close text-reset"
+                                                                data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="offcanvas-body">
+                                                            <h1 class="display-6 mt-4">
+                                                                <%= wordList.name %>
+                                                            </h1>
+                                                            <p>
+                                                                category: <%= wordList.category %>
+                                                                    language: <%= wordList.language %>
+                                                                        <%= wordList.description %> <span> <button
+                                                                                    class="word-list-btn"> edit
+                                                                                    description</button></span>
+                                                            </p>
+                                                            <button class="word-list-btn">add word</button>
+                                                            <% for(let word of wordList.words) { %>
+                                                                <p>
+                                                                    <%= word %> <span><button
+                                                                                class="word-list-btn">-</button></span>
+                                                                </p>
+                                                                <% } %>
+                                                                    <form action="/<%= user._id %>/lists?_method=DELETE"
+                                                                        method="POST">
 
-                                    <a class="btn btn-primary" href="#"> + </a>
-                                    <!-- <a class="btn btn-primary" href="#">Add Word</a>
-                                  <a class="btn btn-primary" href="#">My list 1</a>
-                                  <a class="btn btn-primary" href="#">My list 2</a> -->
+                                                                        <input type="hidden" name="wordListId" value=<%= wordList._id %>
+                                                                            readonly>
+                                                                        <button type="submit" class="word-list-btn">
+                                                                            delete List</button>
 
-                                </div>
-                                <% } %>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Stats</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-
-
-                                </div>
+                                                                    </form>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                            </div>
+                                            <% } %>
                             </div>
 
                         </div>
@@ -195,4 +240,56 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+
+            <!-- modal -->
+
+            <div class="modal fade" id="newWordListModal">
+                <form id="add-word-list" action="/<%= user._id %>/lists" method="POST">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">New Word List</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <label for="word-list-name">Name your list:</label>
+                                <input type="text" id="word-list-name" name="listName" required>
+
+                                <label for="word-list-language">List Language:</label>
+                                <input type="text" id="word-list-language" name="language">
+
+                                <label for="new-word-list-category-select">Select category:</label>
+                                <select id="new-word-list-category-select" name="select">
+                                    <option value="nouns">Nouns</option>
+                                    <option value="verbs">Verbs</option>
+                                    <option value="adjectives">Adjectives</option>
+                                    <option value="adverbs">Adverbs</option>
+                                    <option value="conjunctives">Conjunctives</option>
+                                    <option value="pronouns">Pronouns</option>
+                                    <option value="other">Other</option>
+                                </select>
+
+                                <label for="word-list-language">List Description:</label>
+                                <input type="text" id="word-list-language" name="description">
+
+                                <!-- words -->
+                                <div id="word-list-words">
+                                    <label for="list-word">Add word:</label>
+                                    <input type="text" id="list-word" name="words[]">
+                                    <p>You can add more words later</p>
+                                    <button type="submit">Save list</button>
+
+                                    <button type="button" onclick="addMoreWords()" id="add-more-to-word-list">+</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Back</button>
+                                <button type="submit" class="btn btn-success">Save list</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>

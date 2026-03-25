@@ -5,7 +5,13 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const WordList = new Schema({
     name: String,
     language: String,
+    category: String,
     words: [String],
+    description: String,
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 })
 
 const UserSchema = new Schema({
@@ -17,6 +23,7 @@ const UserSchema = new Schema({
         unique: true
     },
     nativeLanguage: String,
+    about: String,
     languagesLearning: [String],//array of languages per user
     wordLists: [ WordList ],
     tasks: [{

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { isLoggedIn, isAccountHolder, storeReturnTo } = require('../middleware/middleware');
-const { registerNewUser, loginForm, logUserIn, logOut, registerForm, loadDashboard, getEditProfile, updateProfile, deleteUser, listMembers } = require('../controllers/users')
+const { isLoggedIn, isAccountHolder, storeReturnTo, isAuthorised } = require('../middleware/middleware');
+const { registerNewUser, loginForm, logUserIn, logOut, registerForm, loadDashboard, getEditProfile, updateProfile, deleteUser, getNewLanguage, postNewLanguage, listMembers, deleteLanguage } = require('../controllers/users')
 
 const User = require('../models/user')
 router.get('/register', registerForm);
@@ -22,33 +22,27 @@ router.get('/:id/edit', isLoggedIn, isAccountHolder, getEditProfile)
 router.put('/:id', isLoggedIn, isAccountHolder, updateProfile);
 router.delete('/:id', isLoggedIn,isAccountHolder, deleteUser)
 
-module.exports = router;
+router.get('/:id/languages/new', isLoggedIn, getNewLanguage);
+router.post('/:id/languages', isLoggedIn, postNewLanguage);
+router.delete('/:id/languages', deleteLanguage); //isAuthorsied fix to work
 
-router.get('/:id/languages/new', async (req, res) => {
+router.post('/:id/lists', async (req, res) => {
+    console.log(req.body)
     const user = await User.findById(req.params.id);
-    res.render('users/newlanguage', {user});
-})
-
-router.post('/:id/languages', async (req, res) => {
-    console.log("body is: ",req.body); //{ user: { addedLanguage: 'Russian' } }
-    const user = await User.findById(req.params.id);
-    let newLanguage;
-
-    if (req.body.userSearch) {
-         newLanguage = req.body.userSearch;
-    }
-    else {
-         newLanguage = req.body.user.addedLanguage;
-    }
-    
-    user.languagesLearning.push(newLanguage);
+    const wordList = { name:req.body.listName, language:req.body.language, category: req.body.select, words: req.body.words, description: req.body.description};
+    user.wordLists.push(wordList);
     await user.save();
-    req.flash('success', 'language added to learning list');
+    console.log(wordList);
     res.redirect(`/${user._id}/dashboard`);
 })
 
-// router.delete('/:id/languages/:id', isLoggedIn, async (req, res) => {
-//     const language = await Language.findByIdAndDelete(req.params.id);
-//     res.redirect('/:id/languages');
-// })
+router.delete('/:id/lists', async (req, res) => {
+    const user = await User.findByIdAndUpdate(req.params.id, {
+        $pull: { wordLists: { _id: req.body.wordListId } }
+    });
+    
+    console.log(req.body);
+     res.redirect(`/${user._id}/dashboard`);
+})
 
+module.exports = router;

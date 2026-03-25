@@ -30,7 +30,7 @@
             <div class="form-group mt-3 form-floating">
 
 
-                <select multiple class="form-control" name="task[language]" id="task-language">
+                <select class="form-control" name="task[language]" id="task-language">
                     <% for (let lang of languages ){ %>
                         <option value="<%= lang %>">
                             <%= lang %>
@@ -46,28 +46,28 @@
 
             </div>
 
-            <button class="add-lang-btn mt-2" id="adding-language" data-bs-toggle="modal"
-                data-bs-target="#newLanguageModal"> + </button>
+            <!-- <button class="add-lang-btn mt-2" id="adding-language" data-bs-toggle="modal"
+                data-bs-target="#newLanguageModal"> + </button> -->
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button id="new-button" class="add-task-btn btn btn-dark mb-2 mt-5">Add task</button>
+                <button id="new-button" class="add-task-btn btn btn-dark mb-4 mt-5">Add task</button>
             </div>
+  <p><a class="link-success link-underline-opacity-25 link-underline-opacity-100-hover" href="/tasks">back
+            to tasks</a></p>
 
         </form>
 
 
     </div>
     </div>
-    <p><a class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/tasks">back
-            to tasks</a></p>
-
+  
 
 
     <!-- <div id="" class="modal modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <p>Add a new language to your learning list</p>
     </div> -->
 
-    <div class="modal fade" id="newLanguageModal">
+    <!-- <div class="modal fade" id="newLanguageModal">
         <form id="add-language" action="/<%= user._id %>/languages" method="POST">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -84,11 +84,11 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
-                        <!-- <form id="add-language" action="/<%= user._id %>/languages" method="POST"> -->
+                        <form id="add-language" action="/<%= user._id %>/languages" method="POST"> 
                         <button type="submit" class="btn btn-primary">Add to profile</button>
-                        <!-- </form> -->
+                         </form> 
                     </div>
                 </div>
             </div>
         </form>
-    </div>
+    </div> -->
