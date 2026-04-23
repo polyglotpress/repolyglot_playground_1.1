@@ -28,6 +28,8 @@ The goal is simple: push autodidacts to progress towards their goals.
 **Other**:
 - Mongoose
 - Passport
+- Cloudinary user profile image storage via Multer
+  
 <br>
 
 
