@@ -1,295 +1,449 @@
-<link rel="stylesheet" href="/css/styleDashboard.css" />
+<link rel="stylesheet" href="/css/dashboard.css" />
 <script src="/js/dashboard.js"> defer</script>
 
-
+<script src="/js/languages.js"> defer</script>
 <% layout('layouts/boilerplate.ejs')%>
 
-    <div class="container">
-        <div class="main-body">
 
-            <div class="row mt-5">
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <!-- <img src="" alt="profile pic" class="rounded-circle" width="150"> -->
-                                <div class="mt-3">
-                                    <h4>
-                                        <%=user.username%>
-                                    </h4>
-                                    <p class="text-secondary mb-3">
-                                        <%= user.about || "Aspiring Polyglot" %>
-                                    </p>
-                                    <!-- <p class="text-muted font-size-sm">bla bloa bla</p> -->
-                                    <% if(currentUser && !user.equals(currentUser._id)) { %>
-                                        <button class="btn btn-primary">Follow</button>
-                                        <button class="btn btn-outline-primary">Message</button>
-                                        <% } %>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-8">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Name</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
+    <section class="vh-60" style="background-color: #2d67dc;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-6 mb-4 mb-lg-0">
+                    <div class="card mb-3" style="border-radius: .5rem;">
+                        <div class="row g-0">
+                            <div class="col-md-4 gradient-custom text-center"
+                                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                <img src="<%= user.profileImage || '/images/nophoto.png' %>" alt="Avatar"
+                                    class="img-fluid my-5" style="width: 80px;" />
+
+                                <button onclick="showUploadImageForm()"> <i class="bi bi-upload"></i></button>
+
+                                <form action="/uploadImage" method="POST" enctype="multipart/form-data" id="image-form"
+                                    style="display: none">
+                                    <input type="file" name="avatar" id="fileInput" />
+                                    <button type="submit">Upload</button>
+                                </form>
+
+
+                                <h5 class="text-dark">
                                     <%= user.firstname %>
                                         <%= user.lastname %>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <%= user.email %>
-                                </div>
-                            </div>
-                            <hr>
+                                </h5>
+                                <p class="text-dark">
+                                    <%= user.username %>
+                                </p>
 
 
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Native Language</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <%= user.nativeLanguage %>
-                                </div>
+
+                                <% if(currentUser && user._id.equals(currentUser._id)) { %>
+
+                                    <a class="" href="/<%= user._id %>/edit"><i class="bi bi-pen"></i></a>
+                                    <a class="" id="delete-profile" data-bs-toggle="modal" data-bs-target="#myModal"><i
+                                            class="bi bi-trash"></i></a>
+                                    <% } %>
+
                             </div>
 
-
-                            <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <a class="btn btn-warning" href="/<%= user._id %>/edit">Edit</a>
-                                        <button class="btn btn-danger" id="delete-profile" data-bs-toggle="modal"
-                                            data-bs-target="#myModal">Delete</button>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-6" id="verify-delete-box">
+                            <div class="col-md-8">
+                                <div class="card-body p-4">
+                                    <h6>Profile</h6>
+                                    <hr class="mt-0 mb-4">
+                                    <div class="row pt-1">
+                                        <div class="col-6 mb-3">
+                                            <h6>Email</h6>
+                                            <p class="text-muted">
+                                                <%= user.email %>
+                                            </p>
+                                        </div>
+                                        <div class="col-6 mb-3">
+                                            <h6>Say this</h6>
+                                            <p class="text-muted">
+                                                <%= user.about || "Way to go!" %>
+                                            </p>
                                         </div>
                                     </div>
+                                    <!-- <h6></h6>
+                                    <hr class="mt-0 mb-4"> -->
+                                    <div class="row pt-1">
+                                        <div class="col-6 mb-3">
+                                            <h6>Native</h6>
+                                            <p class="text-muted">
+                                                <%= user.nativeLanguage %>
+                                            </p>
+                                        </div>
+                                        <div class="col-6 mb-3">
+                                            <h6>Member since</h6>
+                                            <p class="text-muted">
+                                                <%= user.createdAt.toLocaleString('en-GB', { day: '2-digit' ,
+                                                    month: 'long' , year: 'numeric' }) %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start">
+
+                                        <i class="bi bi-basket mx-3">
+                                            <%= user.languagesLearning.length %>
+                                                <% if(user.languagesLearning.length==1) { %> language <% } else { %>
+                                                        languages <% } %>
+                                        </i>
+                                        <i class="bi bi-123 mx-3">
+                                            <%= user.tasks.length %> tasks
+                                        </i>
+                                        <i class="bi bi-list">
+                                            <%= user.wordLists.length %> vocab lists
+                                        </i>
+
+                                        <!-- <i class="bi bi-list">
+                                            <%= user.tips %> tips
+                                        </i> -->
+
+                                    </div>
                                 </div>
-                                <% } %>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
 
-            <!--  -->
+    <section class="vh-60">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-6 mb-4">
+                    <div class="card mb-3" style="border-radius: .5rem;">
+                        <div class="row">
 
-            <div class="row mt-32">
+                            <div class="col-md-4">
+                                <div class="card-body">
+                                    <p class="mb-4 text-center">Languages</p>
+                                    <ul>
+                                        <% for(let language of user.languagesLearning) { %>
+                                            <li>
+                                                <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                                                    <form action="/<%=user._id%>/languages?_method=DELETE"
+                                                        method="POST">
+                                                        <input class="" name="lang" readonly hidden
+                                                            value="<%= language %>" />
+                                                        <span>
+                                                            <%= language %> <button class="" type="submit"><i
+                                                                        class="bi bi-trash"></i></button>
+                                                        </span>
+                                                    </form>
 
-                <div class="col-md-6">
-                    <div class="card mb-2 h-100">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Learning: </h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
+                                                    <% } else {%>
+                                                        <span>
+                                                            <%= language %>
+                                                        </span>
+                                                        <% } %>
+                                            </li>
+                                            <% } %>
+                                    </ul>
 
-                                    <% for(let language of user.languagesLearning) { %>
-                                        <form action="/<%=user._id%>/languages?_method=DELETE" method="POST">
-                                            <input class="" name="lang" readonly value="<%= language %>" />
-
-                                            <button class="btn btn-danger" type="submit">X</button>
-                                        </form>
-                                        <% } %>
-                                </div>
-
-                                <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                                    <div class="col-sm-12">
-                                        <a class="btn btn-primary" href="/<%= user._id %>/languages/new">+</a>
+                                    <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                                        <a class="" id="add-language" data-bs-toggle="modal"
+                                            data-bs-target="#newLanguageModal"><i class="bi bi-plus"></i></a>
+                                        <!-- <a class="btn btn-primary" href="/<%= user._id %>/languages/new"><i class="bi bi-plus"></i></a> -->
                                         <!-- <a class="btn btn-warning" id="edit-languages">Edit Languages</a> -->
-                                    </div>
 
-                                    <% } %>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Tasks</h6>
+
+                                        <% } %>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                            </div>
 
-                                    <% for(let task of user.tasks) { %>
+                            <div class="col-md-4">
+                                <div class="card-body">
+                                    <p class="mb-4 text-center">Tasks</p>
+                                    <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                                        <a href="/tasks/new"> <i class="bi bi-plus"></i></a>
 
-                                        <p>
-                                            <%= task.title %>
-                                        </p>
-                                        <p>
-                                            <%= task.language %>
-                                        </p>
                                         <% } %>
 
-                                            <p>
-                                                total: <%= user.tasks.length %>
-                                            </p>
+                                            <% for(let task of user.tasks) { %>
+
+                                                <p>
+                                                    <%= task.title %>
+                                                </p>
+                                                <p class="text-muted">
+                                                    <%= task.language %>
+                                                </p>
+                                                <% } %>
+
 
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card mb-3 h-100">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="text-center">
-                                    <h6 class="mb-0">Words list</h6>
-                                </div>
 
-                                <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                                    <div class="col-sm-12">
+                            <div class="col-md-4">
+                                <div class="card-body">
+                                    <p class="mb-4 text-center">Vocabulary lists</p>
+                                    <ol>
 
-                                        <button class="btn" id="" data-bs-toggle="modal"
-                                            data-bs-target="#newWordListModal"> + </button>
-                                    </div>
-                                    <% } %>
-                                        <% if(user.wordLists.length> 0) { %>
-                                            <div>
-                                                <% for(let wordList of user.wordLists) { %>
-                                                    <p>
-                                                        <button class="btn btn-primary word-list-link" type="button"
-                                                            data-bs-toggle="offcanvas"
-                                                            data-bs-target="#offcanvas-<%= wordList._id %>"
-                                                            aria-controls="offcanvas-<%= wordList._id %>">
-                                                            <%= wordList.name %> (<%= wordList.language %>)
-                                                        </button>
-                                                        <!-- href="/list/<%= wordList._id %>"  -->
-                                                    </p>
-
-                                                    <!-- off canvas -->
-                                                    <div class="offcanvas offcanvas-start" tabindex="-1"
-                                                        id="offcanvas-<%= wordList._id %>"
-                                                        aria-labelledby="offcanvasLabel-<% wordList._id %>">
-                                                        <div class="offcanvas-header">
-                                                            <h5 class="offcanvas-title"
-                                                                id="offcanvasLabel-<% wordList._id %>">List:
-                                                                <%= user.username %>
-                                                            </h5>
-                                                            <button type="button" class="btn-close text-reset"
-                                                                data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="offcanvas-body">
-                                                            <h1 class="display-6 mt-4">
-                                                                <%= wordList.name %>
-                                                            </h1>
-                                                            <p>
-                                                                category: <%= wordList.category %>
-                                                                    language: <%= wordList.language %>
-                                                                        <%= wordList.description %> <span> <button
-                                                                                    class="word-list-btn"> edit
-                                                                                    description</button></span>
-                                                            </p>
-                                                            <button class="word-list-btn">add word</button>
-                                                            <% for(let word of wordList.words) { %>
+                                        <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                                            <button class="btn" id="" data-bs-toggle="modal"
+                                                data-bs-target="#newWordListModal">
+                                                + </button>
+                                            <% } %>
+                                                <% if(user.wordLists.length> 0) { %>
+                                                    <div>
+                                                        <% for(let wordList of user.wordLists) { %>
+                                                            <li>
                                                                 <p>
-                                                                    <%= word %> <span><button
-                                                                                class="word-list-btn">-</button></span>
+                                                                    <button class="btn btn-primary word-list-link"
+                                                                        type="button" data-bs-toggle="offcanvas"
+                                                                        data-bs-target="#offcanvas-<%= wordList._id %>"
+                                                                        aria-controls="offcanvas-<%= wordList._id %>">
+                                                                        <%= wordList.name %> (<%= wordList.language %>)
+                                                                    </button>
+                                                                    <!-- href="/list/<%= wordList._id %>"  -->
                                                                 </p>
-                                                                <% } %>
-                                                                    <form action="/<%= user._id %>/lists?_method=DELETE"
-                                                                        method="POST">
 
-                                                                        <input type="hidden" name="wordListId" value=<%= wordList._id %>
-                                                                            readonly>
-                                                                        <button type="submit" class="word-list-btn">
-                                                                            delete List</button>
+                                                                <!-- off canvas -->
+                                                                <div class="offcanvas offcanvas-start" tabindex="-1"
+                                                                    id="offcanvas-<%= wordList._id %>"
+                                                                    aria-labelledby="offcanvasLabel-<% wordList._id %>">
+                                                                    <div class="offcanvas-header">
+                                                                        <h5 class="offcanvas-title"
+                                                                            id="offcanvasLabel-<% wordList._id %>">List:
+                                                                            <%= user.username %>
+                                                                        </h5>
+                                                                        <button type="button"
+                                                                            class="btn-close text-reset"
+                                                                            data-bs-dismiss="offcanvas"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="offcanvas-body">
+                                                                        <h1 class="display-6 mt-4">
+                                                                            <%= wordList.name %>
+                                                                        </h1>
+                                                                        <p>
+                                                                            category: <%= wordList.category %>
+                                                                                language: <%= wordList.language %>
+                                                                                    <%= wordList.description %> <span>
+                                                                                            <button
+                                                                                                class="word-list-btn">
+                                                                                                edit
+                                                                                                description</button></span>
+                                                                        </p>
+                                                                        <button id="add-word-button"
+                                                                            class="word-list-btn"
+                                                                            onclick="addMoreWords()">add word</button>
+                                                                        <form action="/<%= user._id %>/lists"
+                                                                            method="POST">
+                                                                            <input type="hidden" name="wordList"
+                                                                                value="<%= wordList._id %>">
+                                                                            <div id="word-list-words"></div>
+                                                                            <button id="addWordBtnSubmit" type="submit"
+                                                                                class="btn btn-success"
+                                                                                style="display: none;">Add</button>
 
-                                                                    </form>
-                                                        </div>
+                                                                        </form>
+                                                                        <% for(let word of wordList.words) { %>
+
+                                                                            <form
+                                                                                action="/<%= user._id %>/lists/word?_method=DELETE"
+                                                                                method="POST">
+                                                                                <input type="hidden" name="wordList"
+                                                                                    value="<%= wordList._id %>">
+                                                                                <input type="hidden" name="word"
+                                                                                    value="<%= word %>">
+                                                                                <p>
+                                                                                    <%= word %> <span>
+                                                                                            <button type="submit"
+                                                                                                class="word-list-btn">-</button>
+                                                                                        </span>
+                                                                                </p>
+                                                                            </form>
+                                                                            <% } %>
+                                                                                <form
+                                                                                    action="/<%= user._id %>/lists?_method=DELETE"
+                                                                                    method="POST">
+
+                                                                                    <input type="hidden"
+                                                                                        name="wordListId"
+                                                                                        value=<%=wordList._id %>
+                                                                                    readonly>
+                                                                                    <button type="submit"
+                                                                                        class="word-list-btn">
+                                                                                        delete List</button>
+
+                                                                                </form>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <% } %>
                                                     </div>
                                                     <% } %>
-                                            </div>
-                                            <% } %>
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Just a second, <%= user.username %>!</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to permanently delete your profile?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
-                            <form id="delete-user-form" action="/<%= user._id %>?_method=DELETE" method="POST">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- modal -->
-
-            <div class="modal fade" id="newWordListModal">
-                <form id="add-word-list" action="/<%= user._id %>/lists" method="POST">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">New Word List</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-
-                                <label for="word-list-name">Name your list:</label>
-                                <input type="text" id="word-list-name" name="listName" required>
-
-                                <label for="word-list-language">List Language:</label>
-                                <input type="text" id="word-list-language" name="language">
-
-                                <label for="new-word-list-category-select">Select category:</label>
-                                <select id="new-word-list-category-select" name="select">
-                                    <option value="nouns">Nouns</option>
-                                    <option value="verbs">Verbs</option>
-                                    <option value="adjectives">Adjectives</option>
-                                    <option value="adverbs">Adverbs</option>
-                                    <option value="conjunctives">Conjunctives</option>
-                                    <option value="pronouns">Pronouns</option>
-                                    <option value="other">Other</option>
-                                </select>
-
-                                <label for="word-list-language">List Description:</label>
-                                <input type="text" id="word-list-language" name="description">
-
-                                <!-- words -->
-                                <div id="word-list-words">
-                                    <label for="list-word">Add word:</label>
-                                    <input type="text" id="list-word" name="words[]">
-                                    <p>You can add more words later</p>
-                                    <button type="submit">Save list</button>
-
-                                    <button type="button" onclick="addMoreWords()" id="add-more-to-word-list">+</button>
+                                    </ol>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Back</button>
-                                <button type="submit" class="btn btn-success">Save list</button>
-                            </div>
                         </div>
+
+
+
+
+
+
                     </div>
-                </form>
+                </div>
             </div>
+        </div>
+    </section>
+
+
+
+    <!-- Modals -->
+
+    <!-- Modal - Verify delete profile -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Just a second, <%= user.username %>!</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to permanently delete your
+                    profile?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
+                    <form id="delete-user-form" action="/<%= user._id %>?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal - add language to learning list -->
+    <div class="modal fade" id="newLanguageModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Hi <%= user.username %>, learning another language?</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/<%= user._id %>/languages" method="POST">
+                        <div class="input-group col-lg-6 col-md-8 col-sm-10">
+                            <div class="form-floating">
+
+                                <label class="form-label" for="language">Insert language</label>
+
+                                <select class="form-control" name="addedLanguage" id="add-language-select"
+                                    onclick="setLanguageSelect(event)"></select>
+                            </div>
+                            <button class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal - add new word list -->
+
+    <div class="modal fade" id="newWordListModal">
+        <form id="add-word-list" action="/<%= user._id %>/lists" method="POST" autocomplete="off">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">New vocabulary list</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="form-floating mb-3">
+                            <input type="text" id="word-list-name" class="form-control" name="listName" required>
+                            <label id="form-label" for="word-list-name">Name your list:</label>
+                        </div>
+
+                        <!-- make select of user profile languages  -->
+                        <div class="form-floating mb-3">
+                            <select class="form-control" name="language" id="word-list-language" required>
+                                <option value="<%= user.nativeLanguage %>""><%= user.nativeLanguage %></option>
+<% user.languagesLearning.forEach(lang => { %>
+<option value=" <%=lang %>"><%= lang %>
+                                </option>
+                                <% }) %>
+
+                            </select>
+
+                            <!-- <input type="text" id="word-list-language" class="form-control" name="language" required> -->
+                            <label id="form-label" for="word-list-language">Vocab language:</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <select class="form-control" name="select" id="new-list-category-select">
+                                <option value="nouns">Nouns</option>
+                                <option value="verbs">Verbs</option>
+                                <option value="adjectives">Adjectives</option>
+                                <option value="adverbs">Adverbs</option>
+                                <option value="conjunctives">Conjunctives</option>
+                                <option value="pronouns">Pronouns</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <label id="form-label" for="new-list-category-select">List category:</label>
+                        </div>
+
+                        </select>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" id="word-list-description" class="form-control" name="description">
+                            <label id="form-label" for="word-list-description">Details:</label>
+                        </div>
+
+
+                        <!-- add words -->
+                        <div id="word-list-words">
+
+                            <div class="form-floating mb-3">
+                                <input type="text" id="list-word-1" class="form-control list-word-input" name="words[]">
+                                <label id="form-label" for="list-word">Add word:</label>
+                            </div>
+
+
+
+                        </div>
+                        <div id="add-words-div"></div>
+                        <button type="button" onclick="addToVocab()" id="add-more-to-word-list"><i
+                                class="bi bi-plus"></i></button>
+                    </div>
+                    <p id="add-word-comments">You can come back and add more words later</p>
+                    <span>Total words in list:<strong id="list-word-count"> </strong></span>
+                    <div class="modal-footer">
+                        <!-- <button class="btn btn-primary" id="toggleModal2" data-bs-target="#modal2"
+                            data-bs-toggle="modal" data-bs-dismiss="modal">Next</button> -->
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
+                        <button type="submit" class="btn btn-success">Save
+                            list</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--  -->
+
+    <!-- <div class="modal fade" id="modal2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Hide this modal and show the first with the button below.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#newWordListModal" data-bs-toggle="modal"
+                        data-bs-dismiss="modal">Back to first</button>
+                </div>
+            </div>
+        </div>
+    </div> -->

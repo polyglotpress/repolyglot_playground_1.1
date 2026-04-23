@@ -3,27 +3,12 @@
 <% layout('layouts/boilerplate.ejs')%>
 
   <h1 class="display-6 text-center mt-4 mb-4">Another Language?</h1>
-
-  <!-- <div class="col-4 offset-1 mt-4"> -->
   <form action="/<%= user._id %>/languages" method="POST">
-
     <div class="input-group col-lg-6 col-md-8 col-sm-10">
       <div class="form-floating">
-
-        <input type="text" id="language" class="form-control" name="user[addedLanguage]" placeholder="Add Language">
-
-
+        <input type="text" id="language" class="form-control" name="addedLanguage" placeholder="Add Language">
         <label class="form-label" for="language">Insert language</label>
       </div>
-
-      <!-- <div>
-        <select name="" id=""></select>
-       
-<option value=""></option>
-     
-        
-      </div> -->
       <button class="btn btn-primary">Add</button>
     </div>
-
   </form>

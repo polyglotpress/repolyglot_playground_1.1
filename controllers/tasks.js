@@ -1,13 +1,14 @@
 const Task = require('../models/task');
 const User = require('../models/user');
+const wrapAsync = require('../helpers/wrapAsync');
 
-module.exports.listTasks = (
+module.exports.listTasks = wrapAsync(
     async (req, res) => { //display all tasks from database on this page
         const tasks = await Task.find({}).populate('creator');
         res.render('tasks/index', { tasks });
     })
 
-module.exports.newTaskForm = (
+module.exports.newTaskForm = wrapAsync(
     async (req, res) => {
         //const user = await User.findById(req.params.id); //find logged in user???
         console.log("user requesting form ", req.user);

@@ -3,7 +3,6 @@ const Task = require('../models/task');
 
 //user middleware
 module.exports.isLoggedIn = (req, res, next) => {
-
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl;
         console.log("saving return to: ", req.session.returnTo); //then check if same user id as logged in user, otherwise returns to previous user's dashboard, security
@@ -18,20 +17,19 @@ module.exports.isAccountHolder = async (req, res, next) => {
         const user = await User.findById(req.params.id);
         if (!user._id.equals(req.user.id)) {
             req.flash('error', 'You are not the account holder');
-            return res.redirect("/login");
+            return res.redirect('/login');
         }
         next();
     } catch (err) {
         console.log("error is here, " + err);
-    }
-}
+    }}
 
-//task middleware
+//task middleware - is user also task creator
 module.exports.isAuthorised = async (req, res, next) => {
     const task = await Task.findById(req.params.id);
     if (!task.creator.equals(req.user.id)) {
         req.flash('error', 'You do not have permission to do that');
-        return res.redirect("/login");
+        return res.redirect('/login');
     }
     next();
 }

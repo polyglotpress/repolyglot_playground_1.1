@@ -167,3 +167,11 @@ if (userSearchLanguage) {
 // postTipBtn.addEventListener("click", () => {
 //    document.querySelector("#add-tip-modal").modal('hide');
 // })
+
+//initialise modals
+
+function InitialiseModals() {
+const deleteProfileModal = new Modal('#deleteProfileModal');
+const addListModal = new Modal('#addListModal');
+const addLanguageModal = new Modal('#addLanguageModal');
+}

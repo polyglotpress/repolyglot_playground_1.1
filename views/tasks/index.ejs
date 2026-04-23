@@ -1,13 +1,5 @@
 <% layout('layouts/boilerplate.ejs')%>
-    <link rel="stylesheet" href="/css/style1.css" />
-
-
-    <!-- <div class="row mt-5">
-        <div class="col text-end">
-            <h4 class="d-inline">All tasks</h4>
-        </div>
-        <div class="col"> <a href="/tasks/new" class="btn btn-primary create-new ">Create new task</a></div>
-    </div> -->
+    <link rel="stylesheet" href="/css/style_index.css" />
 
     <div class="title-container mt-3">
 
@@ -35,15 +27,12 @@
                                                 in: <%= task.category || 'other' %>
                                             </div>
                                             <div class="card-body">
-                                                <p class="card-title"><strong>
-                                                        <!-- <a class="text-center text-decoration-none" -->
-                                                        <!-- href="/tasks/<%= task._id%>"> -->
-                                                        <%= task.title %>
-                                                            <!-- </a> -->
+                                                <p class="card-title"><strong>     
+                                                        <%= task.title %>             
                                                     </strong>
                                                 </p>
-                                                <p class="card-subtitle mb-2 text-muted"> by <%=
-                                                        task.creator.username %>
+                                                <p class="card-subtitle mb-2 text-muted"> by <%= task.creator.username
+                                                        %>
                                                 </p>
 
                                             </div>
@@ -51,9 +40,10 @@
                                                 <a href="/tasks/<%= task._id%>"
                                                     class="card-link btn btn-info mt-auto">View</a>
 
-                                                <!-- if you are the owner than edit -->
-                                                <% if(currentUser && task.creator.id == currentUser._id) { %>
-                                                    <a href="/tasks/<%= task._id %>/edit" class="card-link btn btn-info mt-auto">Edit</a>
+                                                <!-- if you are the owner then edit -->
+                                                <% if(currentUser && task.creator.id==currentUser._id) { %>
+                                                    <a href="/tasks/<%= task._id %>/edit"
+                                                        class="card-link btn btn-info mt-auto">Edit</a>
                                                     <% } %>
                                             </div>
                                         </div>

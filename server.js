@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-//const { createClient } = require('redis');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const bodyParser = require('body-parser');
@@ -10,6 +9,10 @@ const LocalStrategy = require('passport-local');
 const flash = require('connect-flash');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, './.env') }); //
+const ExpressError = require('./helpers/ExpressError');
+// const cloudinary = require('cloudinary').v2;
+// const multer = require('multer');
+// const upload = multer({ dest: 'uploads/' }); //temporary
 
 //models
 const User = require('./models/user');
@@ -25,6 +28,7 @@ const { isLoggedIn } = require('./middleware/middleware');
 
 //database connection
 let MONGO_URL = process.env.MONGO_URI;
+
 mongoose.connect(MONGO_URL, { family: 4 })
     .then(() => {
         console.log("database connected");
@@ -32,6 +36,12 @@ mongoose.connect(MONGO_URL, { family: 4 })
     .catch(err => {
         console.error("connection errorL ", err);
     });
+
+// cloudinary.config({
+//     cloud_name: process.env.CLOUD_NAME,
+//     api_key: process.env.API_KEY,
+//     api_secret: process.env.API_SECRET
+// });
 
 const app = express();
 
@@ -70,7 +80,7 @@ app.use((req, res, next) => {
 app.use(methodOverride('_method'));
 
 app.use('/tasks', taskRoutes);
-app.use('/', userRoutes); //  not /users
+app.use('/', userRoutes);
 
 //routes visible to everyone:
 
@@ -79,6 +89,8 @@ app.get('/', async (req, res) => {
     const usersCount = await User.countDocuments();
     res.render('home', { tasksCount, usersCount })
 })
+
+
 
 app.get('/tips', async (req, res) => {
     const tips = await Tip.find({}).populate('author');
@@ -98,30 +110,15 @@ app.post('/tips', isLoggedIn, async (req, res) => {
     res.redirect('/tips');
 })
 
-// app.get('/secret', (req, res) => {
-//     if (!req.isAuthenticated()) {
-//         req.flash('error', 'you must be logged in');
-//         return res.redirect('/login');
-//     }
-//     res.send("you can access this");
-// })
+app.all('/{*path}', (req, res, next) => {
+    next(new ExpressError('Page not found', 404))
+})
 
-
-app.get('/list/:id', async (req, res) => {
-    const currentUser = req.user;
-    const user = await User.findOne({
-        'wordLists._id': req.params.id
-    });
-    if (!user) {
-        return res.status(404).send("user not found");
-    }
-    const wordList = user.wordLists.id(req.params.id);
-   // res.render('users/wordList', { wordList, user, currentUser }); //toggle offcanvas instead
-});
-
-// app.all("*", (req, res) => {
-//     res.status(404).render("404");
-// })
+//now owrking
+app.use((err, req, res, next) => {
+    const { statusCode = 500, message = 'Something went wrong!' } = err;
+    res.status(statusCode).send(message);
+})
 
 const PORT = process.env.PORT || 5000;
 

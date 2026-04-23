@@ -11,7 +11,10 @@ const TaskSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    completed: {type: Boolean, default: false}
+    completed: {
+        type: Boolean,
+        default: false
+    }
 
 },
 {timestamps : true}

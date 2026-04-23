@@ -1,100 +1,203 @@
-module.exports.languages = [
-    { name: "Afrikaans", code: "af" },
-    { name: "Albanian", code: "sq" },
-    { name: "Amharic", code: "am" },
-    { name: "Arabic", code: "ar" },
-    { name: "Armenian", code: "hy" },
-    { name: "Azerbaijani", code: "az" },
-    { name: "Basque", code: "eu" },
-    { name: "Belarusian", code: "be" },
-    { name: "Bengali", code: "bn" },
-    { name: "Bosnian", code: "bs" },
-    { name: "Bulgarian", code: "bg" },
-    { name: "Catalan", code: "ca" },
-    { name: "Chinese", code: "zh" },
-    { name: "Croatian", code: "hr" },
-    { name: "Czech", code: "cs" },
-    { name: "Danish", code: "da" },
-    { name: "Dutch", code: "nl" },
-    { name: "English", code: "en" },
-    { name: "Esperanto", code: "eo" },
-    { name: "Estonian", code: "et" },
-    { name: "Faroese", code: "fo" },
-    { name: "Filipino", code: "fil" },
-    { name: "Finnish", code: "fi" },
-    { name: "French", code: "fr" },
-    { name: "Galician", code: "gl" },
-    { name: "Georgian", code: "ka" },
-    { name: "German", code: "de" },
-    { name: "Greek", code: "el" },
-    { name: "Guarani", code: "gn" },
-    { name: "Gujarati", code: "gu" },
-    { name: "Hausa", code: "ha" },
-    { name: "Hawaiian", code: "haw" },
-    { name: "Hebrew", code: "he" },
-    { name: "Hindi", code: "hi" },
-    { name: "Hungarian", code: "hu" },
-    { name: "Icelandic", code: "is" },
-    { name: "Indonesian", code: "id" },
-    { name: "Irish", code: "ga" },
-    { name: "Italian", code: "it" },
-    { name: "Japanese", code: "ja" },
-    { name: "Kannada", code: "kn" },
-    { name: "Kazakh", code: "kk" },
-    { name: "Korean", code: "ko" },
-    { name: "Kurdish", code: "ku" },
-    { name: "Kyrgyz", code: "ky" },
-    { name: "Lao", code: "lo" },
-    { name: "Latin", code: "la" },
-    { name: "Latvian", code: "lv" },
-    { name: "Lingala", code: "ln" },
-    { name: "Lithuanian", code: "lt" },
-    { name: "Macedonian", code: "mk" },
-    { name: "Malay", code: "ms" },
-    { name: "Maltese", code: "mt" },
-    { name: "Marathi", code: "mr" },
-    { name: "Mongolian", code: "mn" },
-    { name: "Nepali", code: "ne" },
-    { name: "Norwegian", code: "no" },
-    { name: "Pashto", code: "ps" },
-    { name: "Persian", code: "fa" },
-    { name: "Polish", code: "pl" },
-    { name: "Portuguese", code: "pt" },
-    { name: "Punjabi", code: "pa" },
-    { name: "Romanian", code: "ro" },
-    { name: "Romansh", code: "rm" },
-    { name: "Russian", code: "ru" },
-    { name: "Gaelic", code: "gd" },
-    { name: "Serbian", code: "sr" },
-    { name: "Sinhala", code: "si" },
-    { name: "Slovak", code: "sk" },
-    { name: "Slovenian", code: "sl" },
-    { name: "Somali", code: "so" },
-    { name: "Southern Sotho", code: "st" },
-    { name: "Spanish", code: "es" },
-    { name: "Sundanese", code: "su" },
-    { name: "Swahili", code: "sw" },
-    { name: "Swedish ", code: "sv" },
-    { name: "Tajik", code: "tg" },
-    { name: "Tamil", code: "ta" },
-    { name: "Tatar", code: "tt" },
-    { name: "Telugu", code: "te" },
-    { name: "Thai", code: "th" },
-    { name: "Tigrinya", code: "ti" },
-    { name: "Tongan", code: "to" },
-    { name: "Turkish", code: "tr" },
-    { name: "Turkmen", code: "tk" },
-    { name: "Twi", code: "tw" },
-    { name: "Ukrainian", code: "uk" },
-    { name: "Urdu", code: "ur" },
-    { name: "Uyghur", code: "ug" },
-    { name: "Uzbek", code: "uz" },
-    { name: "Vietnamese", code: "vi" },
-    { name: "Walloon", code: "wa" },
-    { name: "Welsh Cymraeg", code: "cy" },
-    { name: "Western Frisian", code: "fy" },
-    { name: "Xhosa", code: "xh" },
-    { name: "Yiddish", code: "yi" },
-    { name: "Yoruba ", code: "yo" },
-    { name: "Zulu", code: "zu" }
-];
+
+const languageToCountry = {
+    en: {
+        versions: ["english", "eng"],
+        name: "English",
+        countries: ["United Kingdom", "United States", "Canada", "Australia"],
+        codes: ["GB", "US", "CA", "AU"]
+    },
+    es: {
+        versions: ["spanish", "espanol", "español"],
+        name: "Spanish",
+        countries: ["Spain", "Mexico", "Argentina"],
+        codes: ["ES", "MX", "AR"]
+    },
+    fr: {
+        versions: ["french", "francais", "français"],
+        name: "French",
+        countries: ["France", "Belgium", "Canada"],
+        codes: ["FR", "BE", "CA"]
+    },
+    de: {
+        versions: ["german", "deutsch"],
+        name: "German",
+        countries: ["Germany", "Austria", "Switzerland"],
+        codes: ["DE", "AT", "CH"]
+    },
+    pt: {
+        versions: ["portuguese", "portugues", "português"],
+        name: "Portuguese",
+        countries: ["Portugal", "Brazil"],
+        codes: ["PT", "BR"]
+    },
+    nl: {
+        versions: ["dutch", "nederlands"],
+        name: "Dutch",
+        countries: ["Netherlands", "Belgium"],
+        codes: ["NL", "BE"]
+    },
+    sv: {
+        versions: ["swedish", "svenska"],
+        name: "Swedish",
+        countries: ["Sweden"],
+        codes: ["SE"]
+    },
+    no: {
+        versions: ["norwegian", "norsk"],
+        name: "Norwegian",
+        countries: ["Norway"],
+        codes: ["NO"]
+    },
+    da: {
+        versions: ["danish", "dansk"],
+        name: "Danish",
+        countries: ["Denmark"],
+        codes: ["DK"]
+    },
+    fi: {
+        versions: ["finnish", "suomi"],
+        name: "Finnish",
+        countries: ["Finland"],
+        codes: ["FI"]
+    },
+    pl: {
+        versions: ["polish", "polski"],
+        name: "Polish",
+        countries: ["Poland"],
+        codes: ["PL"]
+    },
+    cs: {
+        versions: ["czech", "čeština"],
+        name: "Czech",
+        countries: ["Czech Republic"],
+        codes: ["CZ"]
+    },
+    hu: {
+        versions: ["hungarian", "magyar"],
+        name: "Hungarian",
+        countries: ["Hungary"],
+        codes: ["HU"]
+    },
+    ro: {
+        versions: ["romanian", "română"],
+        name: "Romanian",
+        countries: ["Romania"],
+        codes: ["RO"]
+    },
+    el: {
+        versions: ["greek", "ελληνικά"],
+        name: "Greek",
+        countries: ["Greece"],
+        codes: ["GR"]
+    },
+    tr: {
+        versions: ["turkish", "türkçe"],
+        name: "Turkish",
+        countries: ["Turkey"],
+        codes: ["TR"]
+    },
+    ru: {
+        versions: ["russian", "русский"],
+        name: "Russian",
+        countries: ["Russia"],
+        codes: ["RU"]
+    },
+    uk: {
+        versions: ["ukrainian", "українська"],
+        name: "Ukrainian",
+        countries: ["Ukraine"],
+        codes: ["UA"]
+    },
+
+    // 🌏 Asia
+    he: {
+        versions: ["hebrew", "ivrit"],
+        name: "Hebrew",
+        countries: ["Israel"],
+        codes: ["IL"]
+    },
+    zh: {
+        versions: ["chinese", "mandarin", "中文"],
+        name: "Chinese",
+        countries: ["China", "Taiwan"],
+        codes: ["CN", "TW"]
+    },
+    ja: {
+        versions: ["japanese", "日本語"],
+        name: "Japanese",
+        countries: ["Japan"],
+        codes: ["JP"]
+    },
+    ko: {
+        versions: ["korean", "한국어"],
+        name: "Korean",
+        countries: ["South Korea"],
+        codes: ["KR"]
+    },
+    hi: {
+        versions: ["hindi"],
+        name: "Hindi",
+        countries: ["India"],
+        codes: ["IN"]
+    }
+};
+
+
+function fetchFlagUrl(lang, country = "default") {
+
+    let index;
+    if (country == "default") index = 0;
+    else index = lang.countries.indexOf(country);
+
+    let countryCode = languageToCountry[lang].codes[index];
+    console.log(countryCode);
+    let flagUrl = `https://flagsapi.com/${countryCode}/flat/64.png`;
+    console.log(flagUrl);
+
+    const el = document.createElement('img')
+    el.src = flagUrl;
+    document.querySelector("#flag").append(el);
+
+}
+
+//method validate language before adding to profile - in register form, and dashboard add language, and task language
+
+//check exists
+
+//change spelling
+
+//check no doubles
+
+const validateNewLanguage = () => {
+
+}
+
+async function getCountryFromAPI() {
+    await fetch("https://restcountries.com/v3.1/name/monaco")
+        .then(res => res.json())
+        .then(data => console.log(data))
+}
+
+//
+
+//languages for selects - register etc, add-language
+function setLanguageSelect(event) {
+    console.log("entered")
+    const addLanguageSelect = document.querySelector("#add-language-select");
+    const nativeLanguageSelect = document.querySelector("#native-language-select");
+    const editProfileSelect = document.querySelector("#edit-profile-native-select");
+
+    for (const [key] of Object.entries(languageToCountry)) {
+        const opt = document.createElement("option");
+        opt.value = languageToCountry[key].name;
+        console.log(opt.value);
+        opt.innerText = opt.value;
+        if (event.currentTarget.id == "add-language-select")
+            addLanguageSelect.appendChild(opt);
+        else if (event.currentTarget.id == "native-language-select")
+            nativeLanguageSelect.appendChild(opt);
+        else if (event.currentTarget.id == "edit-profile-native-select")
+            editProfileSelect.appendChild(opt); //append entire select, not options
+    }
+
+}

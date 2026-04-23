@@ -23,15 +23,21 @@ const UserSchema = new Schema({
         unique: true
     },
     nativeLanguage: String,
+    profileImage: {
+        type: String,
+        default: '/images/nophoto.png'
+    }, //url to cloudinary
     about: String,
     languagesLearning: [String],//array of languages per user
-    wordLists: [ WordList ],
+    wordLists: [WordList],
     tasks: [{
         type: Schema.Types.ObjectId,
         ref: 'Task'
     }] //array of tasks per user
 },
-    {timestamps : true} //now has user.createdAt and user.updatedAt :)
+    {
+        timestamps: true
+    } //now has user.createdAt and user.updatedAt :)
 
 )
 

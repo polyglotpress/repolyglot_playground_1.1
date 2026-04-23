@@ -1,8 +1,9 @@
+<script src="/js/languages.js" defer></script>
 <% layout('layouts/boilerplate.ejs')%>
 
   <div class="register-body">
     <div class="align-items-center mt-5">
-      <form class="col-8 offset-2" action="/register" method="POST">
+      <form class="col-8 offset-2" action="/register" method="POST" autocomplete="off">
         <h1 class="display-6 mb-3 pb-3 text-center">Sign Up</h1>
         <div class="form-floating mb-3">
 
@@ -15,7 +16,9 @@
 
         </div>
         <div class="form-floating mb-3">
-          <input type="text" id="nativeLanguage" class="form-control" name="nativeLanguage" placeholder="nativeIn">
+          <select class="form-control" name="nativeLanguage" id="native-language-select"
+            onclick="setLanguageSelect(event)">  
+          </select>
           <label for="nativeLanguage" class="form-label">Native Language</label>
         </div>
 
@@ -36,7 +39,7 @@
 
         <button class="register-btn btn btn-primary mt-3 ">Register</button>
 
-        <p class="mt-4">Already have an account? <a href="/login" class="link-success">Login here</a></p>
+        <p class="mt-4">Already have an account? <a href="/login" class="link-dark">Login here</a></p>
 
       </form>
 

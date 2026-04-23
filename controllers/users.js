@@ -1,6 +1,17 @@
 
 const Task = require('../models/task')
 const User = require('../models/user')
+const Tip = require('../models/tip')
+
+// const cloudinary = require('cloudinary').v2;
+// const multer = require('multer');
+// const upload = multer({ dest: 'uploads/' }); //temporary
+
+// cloudinary.config({
+//     cloud_name: process.env.CLOUD_NAME,
+//     api_key: process.env.API_KEY,
+//     api_secret: process.env.API_SECRET
+// });
 
 module.exports.registerForm = (async (req, res) => {
     res.render('users/register');
@@ -50,8 +61,9 @@ module.exports.loadDashboard = (
     async (req, res) => {
         try {
             const tasks = await Task.find({ creator: req.user._id });
+            //const tips = await Tip.find({ author: req.user._id }).countDocuments();
             const user = await User.findById(req.params.id).populate("tasks");
-            res.render('users/dashboard', { user, tasks: user.tasks });
+            res.render('users/dashboard', { user, tasks: user.tasks});
         } catch (err) {
             console.log(err.message);
         }
@@ -63,7 +75,7 @@ module.exports.getEditProfile = (
         res.render('users/editprofile', { user });
     })
 
-module.exports.updateProfile = ( //this isn't actually updating details
+module.exports.updateProfile = (
     async (req, res) => {
         try {
             const user = await User.findByIdAndUpdate(req.params.id, { ...req.body.user }, { new: true });
@@ -73,6 +85,31 @@ module.exports.updateProfile = ( //this isn't actually updating details
             res.redirect(`/${req.params.id}/dashboard`)
         }
     })
+
+// module.exports.uploadUserImage = (upload.single('avatar'), async (req, res) => {
+//         try {
+//             console.log(req.body);
+//             const result = await cloudinary.uploader.upload(req.file.path);          
+//             //     , {
+//             //     folder: "profiles",
+//             //     transformation: [
+//             //         { width: 300, height: 300, crop: "fill" },
+//             //         { quality: "auto" }
+//             //     ]
+//             // });
+//             const imageUrl = result.secure_url;
+//             console.log(imageUrl);
+//             const user = await User.findById(req.user.id);
+//             user.profileImage = imageUrl; //add to model
+//             await user.save();
+
+//             res.redirect(`/${req.params.id}/dashboard`);
+//         } catch (err) {
+//             console.error(err);
+//             res.send("upload failed");
+//         }
+//     }
+// )
 
 module.exports.deleteUser = (
     async (req, res) => {
@@ -103,9 +140,9 @@ module.exports.postNewLanguage = (
             newLanguage = req.body.userSearch;
         }
         else {
-            newLanguage = req.body.user.addedLanguage;
+            newLanguage = req.body.addedLanguage;
         }
-//if language doesn't exist yet
+        //if language doesn't exist yet
         user.languagesLearning.push(newLanguage);
         await user.save();
         req.flash('success', 'language added to learning list');

@@ -21,9 +21,14 @@
                             <p class="mb-0">
                                 Learning <%= user.languagesLearning[0] %>
                             </p>
+                             <p class="mb-0 text-muted">
+                               Member since <%= user.createdAt.toLocaleDateString() %>
+                            </p>
                         </div>
                     </div>
                 </div>
                 <% }) %>
         </div>
     </div>
+
+    <!-- script load flags for members -->
