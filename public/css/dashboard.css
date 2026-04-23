@@ -1,6 +1,3 @@
-/* body {
-    background-color: #FFD786;
-    color: #2c3e50
+.not-owner .owner-only {
+    display: none;
 }
-
- */

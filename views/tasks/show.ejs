@@ -44,7 +44,14 @@
 
                         <a class="card-link btn btn-primary" id="start-task"
                             href="/tasks/<%= task._id %>/start">Start</a>
-                        <a class="card-link btn btn-primary" href="#">Mark Complete</a>
+
+                            <form action="/tasks/<%= task._id %>/markTaskComplete" method="POST">
+                                <input type="text" name="taskToMark" value="<%= task._id %>" hidden>
+                                  <input type="text" name="user" value="<%= currentUser._id %>" hidden>
+                        <button class="card-link btn btn-primary" type="submit">Mark Complete</button>
+
+
+                        </form>
                         <a href="/tasks/<%=task._id%>/edit" class="card-link btn btn-warning">Edit</a>
                         <form class="d-inline card-link" action="/tasks/<%= task._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-danger">Delete</button>
@@ -63,6 +70,6 @@
 
      <div class="mt-5">
         <p>
-        <a class="link-success" href="/tasks">Back to tasks list</a>
+        <a class="link-primary" href="/tasks">Back to tasks list</a>
         </p>
     </div> 

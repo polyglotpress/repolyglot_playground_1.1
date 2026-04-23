@@ -10,9 +10,6 @@ const flash = require('connect-flash');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, './.env') }); //
 const ExpressError = require('./helpers/ExpressError');
-// const cloudinary = require('cloudinary').v2;
-// const multer = require('multer');
-// const upload = multer({ dest: 'uploads/' }); //temporary
 
 //models
 const User = require('./models/user');
@@ -37,15 +34,11 @@ mongoose.connect(MONGO_URL, { family: 4 })
         console.error("connection errorL ", err);
     });
 
-// cloudinary.config({
-//     cloud_name: process.env.CLOUD_NAME,
-//     api_key: process.env.API_KEY,
-//     api_secret: process.env.API_SECRET
-// });
+
 
 const app = express();
 
-app.set('view engine', 'ejs'); //
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.engine('ejs', ejsMate);
 
@@ -114,7 +107,7 @@ app.all('/{*path}', (req, res, next) => {
     next(new ExpressError('Page not found', 404))
 })
 
-//now owrking
+//not
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = 'Something went wrong!' } = err;
     res.status(statusCode).send(message);

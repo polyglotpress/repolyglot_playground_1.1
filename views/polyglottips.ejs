@@ -2,6 +2,9 @@
 
     <h1 class="display-6 text-center mt-5 mb-5">RePolyglot tips</h1>
 
+        <button type="button" class="btn btn-primary mb-5" data-bs-toggle="modal"
+            data-bs-target="#add-tip-modal">New</button>
+
     <div class="container">
         <div class="row mb-3">
             <% tips.forEach((tip)=>{ %>
@@ -25,9 +28,6 @@
                     <% }) %>
                 </div>
         </div>
-
-        <button type="button" class="btn btn-primary mb-5" data-bs-toggle="modal"
-            data-bs-target="#add-tip-modal">New</button>
 
         <!-- modal -->
 
