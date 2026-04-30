@@ -14,8 +14,8 @@
         <!-- show below if user not logged in -->
         <% if(!currentUser) { %>
             <div class="home-btns mt-5 mb-4 d-flex justify-content-center">
-                <a class="btn btn-success px-4 py-3 mx-4" href="/register">Sign Up</a>
-                <a class="btn btn-success px-4 py-3" href="/login">Log In</a>
+                <a class="btn blue-btn px-4 py-3 mx-4" href="/register">Sign Up</a>
+                <a class="btn blue-btn px-4 py-3" href="/login">Log In</a>
             </div>
             <% } else {%>
                 <p>Hi <%= currentUser.firstname || currentUser.username %>!</p>

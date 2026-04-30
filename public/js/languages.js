@@ -109,7 +109,6 @@ const languageToCountry = {
         codes: ["UA"]
     },
 
-    // 🌏 Asia
     he: {
         versions: ["hebrew", "ivrit"],
         name: "Hebrew",
@@ -141,23 +140,53 @@ const languageToCountry = {
         codes: ["IN"]
     }
 };
+//show task page
+const flagDiv = document.querySelector("#flag");
+if (flagDiv) {
+    let lang = document.querySelector("#task-language").value.trim();
+    fetchFlagUrl(lang)
+}
+
+//members page
+window.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".members-flags").forEach(el => {
+        fetchFlagUrl(el.innerText, el.id);
+    })
+})
 
 
-function fetchFlagUrl(lang, country = "default") {
+function fetchFlagUrl(lang, appendTo = "flag") {
+    console.log(lang);
 
-    let index;
-    if (country == "default") index = 0;
-    else index = lang.countries.indexOf(country);
+    let code = Object.entries(languageToCountry).find(([__dirname, v]) => Object.values(v).flat().includes(lang))?.[0]
+    console.log(code);
 
-    let countryCode = languageToCountry[lang].codes[index];
+    let countryCode = languageToCountry[code].codes[0];
     console.log(countryCode);
     let flagUrl = `https://flagsapi.com/${countryCode}/flat/64.png`;
     console.log(flagUrl);
 
     const el = document.createElement('img')
     el.src = flagUrl;
-    document.querySelector("#flag").append(el);
-
+const flagName = document.querySelector("#flagName");
+        
+    if (flagName) {
+        el.addEventListener('mouseover', () => {
+            
+            flagName.textContent = languageToCountry[code].name;
+            flagName.style.display = 'block';
+            console.log(languageToCountry[code].name);
+        })
+        el.addEventListener('mouseout', () => {
+           
+            flagName.textContent = ""
+            flagName.style.display = 'none';
+        })
+        
+    }
+    document.querySelector(`#${appendTo}`).innerHTML = "";
+    document.querySelector(`#${appendTo}`).append(el);
+    
 }
 
 //method validate language before adding to profile - in register form, and dashboard add language, and task language
@@ -169,7 +198,8 @@ function fetchFlagUrl(lang, country = "default") {
 //check no doubles
 
 const validateNewLanguage = () => {
-
+    //check no duplicates
+    
 }
 
 async function getCountryFromAPI() {
@@ -181,23 +211,24 @@ async function getCountryFromAPI() {
 //
 
 //languages for selects - register etc, add-language
-function setLanguageSelect(event) {
-    console.log("entered")
+function setLanguageSelect(event, languagesLearning = []) {
     const addLanguageSelect = document.querySelector("#add-language-select");
     const nativeLanguageSelect = document.querySelector("#native-language-select");
     const editProfileSelect = document.querySelector("#edit-profile-native-select");
 
     for (const [key] of Object.entries(languageToCountry)) {
-        const opt = document.createElement("option");
-        opt.value = languageToCountry[key].name;
-        console.log(opt.value);
-        opt.innerText = opt.value;
-        if (event.currentTarget.id == "add-language-select")
-            addLanguageSelect.appendChild(opt);
-        else if (event.currentTarget.id == "native-language-select")
-            nativeLanguageSelect.appendChild(opt);
-        else if (event.currentTarget.id == "edit-profile-native-select")
-            editProfileSelect.appendChild(opt); //append entire select, not options
+        if (!languagesLearning.includes(languageToCountry[key].name)) {
+            const opt = document.createElement("option");
+            opt.value = languageToCountry[key].name;
+            console.log(opt.value);
+            opt.innerText = opt.value;
+            if (event.currentTarget.id == "add-language-select")
+                addLanguageSelect.appendChild(opt);
+            else if (event.currentTarget.id == "native-language-select")
+                nativeLanguageSelect.appendChild(opt);
+            else if (event.currentTarget.id == "edit-profile-native-select")
+                editProfileSelect.appendChild(opt); 
+        }
     }
 
 }

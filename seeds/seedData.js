@@ -19,7 +19,39 @@ module.exports.seedUsers = [
         password: "password",
         email: "leehammer@gmail.com",
         nativeLanguage: "English",
-        languagesLearning: ["Spanish", "Hungarian"]
+        languagesLearning: ["Spanish", "Hungarian"],
+        wordLists: [{
+            name: "unas nuevas palabras",
+            language: "Spanish",
+            category: "Vocabulary",
+            words: ["mesa", "silla", "bolígrafo", "agua", "ventanta"],
+            description: ""
+        }
+        ]
+    },
+    {
+        firstname: "Elia",
+        lastname: "Lamm",
+        password: "password",
+        email: "elia3@yahoo.com",
+        nativeLanguage: "French",
+        languagesLearning: ["English", "Hebrew"],
+        wordLists: [
+            {
+            name: "wordlist 1 Elia",
+            language: "English",
+            category: "Vocabulary",
+            words: ["table", "laptop", "garden", "donkey"],
+            description: ""
+            },
+             {
+            name: "wordlist 2 Elia",
+            language: "Hebrew",
+            category: "Vocabulary",
+            words: ["שלום", "להתראות", "מטבח", "מיטה"],
+            description: "de mots random au l'hebreu pour m'aider aprendre"
+        }
+        ]
     },
     {
         firstname: "Antonio",
@@ -27,7 +59,8 @@ module.exports.seedUsers = [
         password: "password",
         email: "antoniojueve@gmail.com",
         nativeLanguage: "Spanish",
-        languagesLearning: ["English", "Portuguese", "Yiddish"]
+        languagesLearning: ["English", "Portuguese", "Yiddish"],
+        wordLists: []
 
     },
     {
@@ -36,7 +69,8 @@ module.exports.seedUsers = [
         password: "password",
         email: "lizsmith@email.fr",
         nativeLanguage: "French",
-        languagesLearning: ["Spanish", "Finnish"]
+        languagesLearning: ["Spanish", "Finnish"],
+        wordLists: []
     },
     {
         firstname: "Lior",
@@ -44,7 +78,8 @@ module.exports.seedUsers = [
         password: "password",
         email: "lisha@email.com",
         nativeLanguage: "Hebrew",
-        languagesLearning: ["English", "French"]
+        languagesLearning: ["English", "French"],
+        wordLists: []
     },
     {
         firstname: "Alexander",
@@ -52,6 +87,7 @@ module.exports.seedUsers = [
         password: "password",
         email: "alex123@gmail.com",
         nativeLanguage: "Russian",
-        languagesLearning: ["English"]
+        languagesLearning: ["English"],
+        wordLists: []
     }
 ]

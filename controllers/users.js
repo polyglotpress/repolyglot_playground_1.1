@@ -60,10 +60,11 @@ module.exports.logOut = ((req, res, next) => { //post?
 module.exports.loadDashboard = (
     async (req, res) => {
         try {
-            const tasks = await Task.find({ creator: req.user._id });
+             const user = await User.findById(req.params.id).populate("tasks");
+            //const tasks = await Task.find({ creator: req.user._id });
             //const tips = await Tip.find({ author: req.user._id }).countDocuments();
-            const user = await User.findById(req.params.id).populate("tasks");
-            res.render('users/dashboard', { user, tasks: user.tasks});
+           
+            res.render('users/dashboard', { user});
         } catch (err) {
             console.log(err.message);
         }

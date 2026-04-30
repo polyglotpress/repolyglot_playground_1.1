@@ -1,5 +1,5 @@
+<script src="/js/languages.js" defer></script>
 
-<link rel="stylesheet" href="/css/edit_task.css"/>
 <% layout('layouts/boilerplate.ejs')%>
 
     <div class="row mt-5" id="current-task-card-container">
@@ -15,8 +15,10 @@
                 </div>
 
                 <div class="card-body">
-                    <p class="card-text"> Target Language:
-                        <%= task.language %>
+                    <p class="card-text"> 
+                      <input id="task-language" type="text" value="<%= task.language %> " readonly hidden>  
+                        <div id="flag" onload="fetchFlagUrl('<%= task.language %>')"></div>
+                        <div id="flagName"></div>
                     </p>
                     <p> Category:
                         <%= task.category %>
@@ -38,7 +40,7 @@
                     </p>
                 </div>
 
-                <div class="card-body">
+                <div class="card-footer">
 
                     <% if(currentUser && task.creator.equals(currentUser._id)) { %>
 
@@ -57,7 +59,7 @@
                             <button class="btn btn-danger">Delete</button>
                         </form>
 
-                        <%} else { %>
+                        <%} else if(currentUser) { %>
                             <form class="d-inline card-link" action="/tasks" method="POST">
                                 <button class="add-task btn btn-primary">Add to tasks</a>
                             </form>

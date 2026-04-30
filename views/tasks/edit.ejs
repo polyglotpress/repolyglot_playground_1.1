@@ -21,12 +21,11 @@
                 <input class="form-control" id="task-category" type="text" name="task[category]" value="<%= task.category %>">
                 <label class="form-label" for="task-category">Category:</label>
 </div>
-                <!-- //change so user can add their languages being learnt -->
-                <% const languages=['English', 'French' , 'Spanish' , 'Russian' , 'Hebrew' , 'Hungarian' ]; %>
+            
                 <div class="form-floating mb-3">
 
                     <select class="form-control" name="task[language]" id="task-language">
-                        <% languages.forEach(function(lang) { %>
+                        <% user.languagesLearning.forEach(function(lang) { %>
                             <option value="<%= lang %>" <%= task.language === lang ? 'selected' : '' %>>
                                 <%= lang %>
                             </option>

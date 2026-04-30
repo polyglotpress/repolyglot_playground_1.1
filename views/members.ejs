@@ -1,35 +1,44 @@
+<script src="/js/languages.js" defer></script>
+
 <% layout('layouts/boilerplate.ejs')%>
 
-    <h1 class="display-6 text-center mt-5 mb-5">RePolyglot members</h1>
+<h1 class="display-6 text-center mt-5 mb-5">RePolyglot members</h1>
 
-    <div class="container">
-        <div class="row">
-            <% users.forEach(user=> { %>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="card border-dark h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a class="link-success" href="/<%= user._id %>/dashboard">
-                                    @<%= user.username %></a>
-                            </h5>
-                            <p class="card-text">
-                                <%= user.firstname %>
-                                    <%= user.lastname %>
-                            </p>
-                            <p class="text-muted">Native in <%= user.nativeLanguage %>
-                            </p>
-                            
-                            <p class="mb-0">
-                                Learning <%= user.languagesLearning[0] %>
-                            </p>
-                             <p class="mb-0 text-muted">
-                               Member since <%= user.createdAt.toLocaleDateString() %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <% }) %>
+<div class="container">
+  <div class="row">
+    <% users.forEach(user=> { %>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+      <div class="card border-dark h-100">
+        <div class="card-body">
+
+          <div class="d-flex">
+            <h5 class="card-title">
+              <a class="link-primary mx-3" href="/<%= user._id %>/dashboard">
+                @<%= user.username %></a>
+            </h5>
+
+            <div class="members-flags" id="member-native-<%=user._id%>"><%=user.nativeLanguage%></div>
+
+          </div>
+          
+          <p class="card-text">
+            <%= user.firstname %>
+            <%= user.lastname %>
+          </p>
+
+
+
+          <p class="mb-0">
+            Learning <%= user.languagesLearning[0] %>
+          </p>
+          <p class="mb-0 text-muted">
+            Member since <%= user.createdAt.toLocaleDateString() %>
+          </p>
         </div>
+      </div>
     </div>
+    <% }) %>
+  </div>
+</div>
 
-    <!-- script load flags for members -->
+<!-- script load flags for members -->

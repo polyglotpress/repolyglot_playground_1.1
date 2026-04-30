@@ -31,7 +31,8 @@ const seedDB = async () => {
             username: `${seedUser.firstname.toLowerCase()}${seedUser.lastname.toLowerCase()}`,
             email: seedUser.email,
             nativeLanguage: seedUser.nativeLanguage,
-            languagesLearning: seedUser.languagesLearning
+            languagesLearning: seedUser.languagesLearning,
+            wordLists: seedUser.wordLists
         })
         const registeredUser = await User.register(user, seedUser.password);
         newUsers.push(registeredUser);
@@ -43,11 +44,13 @@ const seedDB = async () => {
 
         const task = new Task({
             title: seedTask,
-            category: "General",
-            description: "No description yet",
-            language: "Any",
+            category: "all-tasks",
+            description: "",
+            language: randomUser.languagesLearning[0],
             creator: randomUser._id
-        })
+        });
+        randomUser.tasks.push(task._id);
+        await randomUser.save();
         await task.save();
     }
 

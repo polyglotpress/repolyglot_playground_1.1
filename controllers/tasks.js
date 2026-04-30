@@ -59,13 +59,15 @@ module.exports.getBeginTask = (
 
 module.exports.getEditTask = (
     async (req, res) => {
+            const user = await User.findById(req.user.id);
         const task = await Task.findById(req.params.id)
-        res.render('tasks/edit', { task });
+        res.render('tasks/edit', { task, user });
     }
 )
 
 module.exports.updateTask = (
     async (req, res) => {
+    
         const task = await Task.findByIdAndUpdate(req.params.id, { ...req.body.task })
         res.redirect(`/tasks/${task._id}`); //fix redirects
     }

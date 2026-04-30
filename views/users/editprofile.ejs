@@ -23,7 +23,7 @@
         <!-- <input type="text" id="nativeLanguage" class="form-control" name="user[nativeLanguage]" value="<%=user.nativeLanguage || '' %>" placeholder="native language"> -->
 
         <select class="form-control" name="user[nativeLanguage]" id="edit-profile-native-select"
-          onclick="setLanguageSelect(event)">
+          onclick="setLanguageSelect(event, '<%= user.languagesLearning %>')">
         </select>
 
         <label for="nativeLanguage" class="form-label">Native Language</label>

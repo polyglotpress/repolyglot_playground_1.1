@@ -5,7 +5,7 @@
 
 body {
     background-color: white;
-    color: #2c3e50;
+    /* color: #2c3e50; */
     margin-top: 50px;
 }
 
@@ -61,10 +61,15 @@ body {
 }
 
 /* partials navbar & footer */
-.navbar-light {
+.navbar {
     background-color: #4056A1 !important;
+    color: antiquewhite !important;
     border-bottom: 2px solid black;
     font-weight: 700;
+}
+
+.navbar-nav li {
+    color: antiquewhite !important;
 }
 
 .footer {
@@ -78,10 +83,7 @@ body {
 
 .login-body,
 .register-body {
-    /* background-color: #F13C20; */
     padding: 14px;
-    /* border: 1px solid black;
-    border-radius: 6px; */
     color: #2c3e50;
     margin-top: 25px;
 }
@@ -90,8 +92,9 @@ body {
     border: 1px solid black;
 }
 
-.login-btn,
-.register-btn { 
+/* large buttons */
+
+.blue-btn {
     color: white;
     border: 1px solid black;
     padding: 10px;
@@ -99,13 +102,40 @@ body {
     padding-right: 15px;
 }
 
-.login-btn:hover,
-.register-btn:hover {
+.blue-btn:hover, .blue-btn-small:hover {
     background-color: #6ab1d1;
     color: black;
     border: 1px solid black;
 }
 
+
+/* smaller buttons */
+
+.blue-btn-small {
+     color: white;
+    border: 1px solid black;
+}
+
+
+/* link to wordlists */
+.word-list-link {
+    border: none;
+    text-decoration: underline;
+    background-color: white;
+}
+
+.word-list-create{
+    border: 1px solid #4056A1;
+    background-color: white;
+    border-radius: 6px; 
+}
+
+/* members page  */
+
+.members-flags img {
+    width: 25px;
+    
+}
 
 /* tips */
 
@@ -116,16 +146,14 @@ body {
 /* all tasks index */
 
 .title-container {
-display: flex;          
-  align-items: center;     
-  gap: 2rem;               /* space between title and button */
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    /* space between title and button */
 }
 
-.card {
-
-}
+.card {}
 
 /* task show single page */
 
 /* task edit page */
-

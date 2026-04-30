@@ -1,421 +1,340 @@
 <link rel="stylesheet" href="/css/dashboard.css" />
-<script src="/js/dashboard.js"> defer</script>
-<script src="/js/languages.js"> defer</script>
+<script src="/js/dashboard.js" defer></script>
+<script src="/js/languages.js" defer></script>
 <% layout('layouts/boilerplate.ejs')%>
 
-    <% const isOwner = currentUser && currentUser._id.toString() === user._id.toString(); %>
-      
+<% const isOwner = currentUser && currentUser._id.toString() === user._id.toString(); %>
+
 <div class="<%= isOwner ? 'is-owner' : 'not-owner' %>">
-                <section class="mb-3" style="background-color: #2d67dc;">
-                    <div class="container py-2 h-100">
-                        <div class="row d-flex justify-content-center align-items-center h-100">
-                            <div class="col col-lg-6">
-                                <div class="card" style="border-radius: .5rem;">
-                                    <div class="row">
-                                        <div class="col-md-4 text-center">
+  <section class="mb-3" style="background-color: #2d67dc;">
+    <div class="container py-2 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-6">
+          <div class="card" style="border-radius: .5rem;">
+            <div class="row">
+              <div class="col-md-4 text-center">
 
-                                            <img src="<%= user.profileImage || '/images/nophoto.png' %>" alt="Avatar"
-                                                class="img-fluid my-5" style="width: 80px; border: 1px solid black;" />
+                <img src="<%= user.profileImage || '/images/nophoto.png' %>" alt="Avatar" class="img-fluid my-5" style="width: 80px; border: 1px solid black;" />
 
-                                            <button class="owner-only" id="showFormButton" onclick="toggleFileUploaderDisplay()"> <i
-                                                    class="bi bi-upload"></i></button>
+                <button class="owner-only" id="showFormButton" onclick="toggleFileUploaderDisplay()"> <i class="bi bi-upload"></i></button>
 
-                                            <form action="/uploadImage" method="POST" enctype="multipart/form-data"
-                                                id="image-form" style="display: none">
+                <form action="/uploadImage" method="POST" enctype="multipart/form-data" id="image-form" style="display: none">
 
-                                                <div class="input-group">
-                                                    <input class="form-control form-control-sm" type="file"
-                                                        name="avatar" id="fileInput" />
-                                                    <button class="btn btn-outline-secondary"
-                                                        type="submit">Save</button>
-                                                </div>
-                                            </form>
+                  <div class="input-group">
+                    <input class="form-control form-control-sm" type="file" name="avatar" id="fileInput" />
+                    <button class="btn btn-outline-secondary" type="submit">Save</button>
+                  </div>
+                </form>
 
+                <h5 class="text-dark">
+                  <%= user.firstname %>
+                  <%= user.lastname %>
+                </h5>
+                <p class="text-dark">
+                  <%= user.username %>
+                </p>
+                <a class="owner-only" href="/<%= user._id %>/edit"><i class="bi bi-pen"></i></a>
+                <a class="owner-only" id="delete-profile" data-bs-toggle="modal" data-bs-target="#myModal"><i class="bi bi-trash"></i></a>
 
-                                            <h5 class="text-dark">
-                                                <%= user.firstname %>
-                                                    <%= user.lastname %>
-                                            </h5>
-                                            <p class="text-dark">
-                                                <%= user.username %>
-                                            </p>
-                                            <a class="owner-only" href="/<%= user._id %>/edit"><i
-                                                    class="bi bi-pen"></i></a>
-                                            <a class="owner-only" id="delete-profile" data-bs-toggle="modal"
-                                                data-bs-target="#myModal"><i class="bi bi-trash"></i></a>
+              </div>
 
-                                        </div>
-
-                                        <div class="col-md-8">
-                                            <div class="card-body ">
-                                                <h6>Profile</h6>
-                                                <hr class="mt-0 mb-4">
-                                                <div class="row pt-1">
-                                                    <div class="col-6 mb-3">
-                                                        <h6>Email</h6>
-                                                        <p class="text-muted">
-                                                            <%= user.email %>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-6 mb-3">
-                                                        <h6>Say this</h6>
-                                                        <p class="text-muted">
-                                                            <%= user.about || "Way to go!" %>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="row pt-1">
-                                                    <div class="col-6 mb-3">
-                                                        <h6>Native</h6>
-                                                        <p class="text-muted">
-                                                            <%= user.nativeLanguage %>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-6 mb-3">
-                                                        <h6>Member since</h6>
-                                                        <p class="text-muted">
-                                                            <%= user.createdAt.toLocaleString('en-GB', { day: '2-digit'
-                                                                , month: 'long' , year: 'numeric' }) %>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-start">
-
-                                                    <i class="bi bi-basket mx-3">
-                                                        <%= user.languagesLearning.length %>
-                                                            <% if(user.languagesLearning.length==1) { %> language <% }
-                                                                    else { %>
-                                                                    languages <% } %>
-                                                    </i>
-                                                    <i class="bi bi-123 mx-3">
-                                                        <%= user.tasks.length %> tasks
-                                                    </i>
-                                                    <i class="bi bi-list">
-                                                        <%= user.wordLists.length %> vocab lists
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+              <div class="col-md-8">
+                <div class="card-body ">
+                  <h6>Profile</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p class="text-muted">
+                        <%= user.email %>
+                      </p>
                     </div>
-                </section>
-
-                <section style="background-color: #8b9fc6;">
-                    <div class="container py-2 h-100">
-                        <div class="row d-flex justify-content-center align-items-center h-100">
-                            <div class="col col-lg-6">
-                                <div class="card" style="border-radius: .5rem;">
-                                    <div class="row">
-
-                                        <div class="col-md-4">
-                                            <div class="card-body">
-                                                <p class="mb-4 text-center">Languages</p>
-                                                <ul>
-                                                    <% for(let language of user.languagesLearning) { %>
-                                                        <li>
-                                                            <form action="/<%=user._id%>/languages?_method=DELETE"
-                                                                method="POST">
-                                                                <input name="lang" readonly hidden
-                                                                    value="<%= language %>" />
-                                                                <span>
-                                                                    <%= language %> <button class="owner-only" type="submit"><i
-                                                                                class="bi bi-trash"></i></button>
-                                                                </span>
-                                                            </form>
-                                                        </li>
-                                                        <% } %>
-                                                </ul>
-                                                <a class="owner-only" id="add-language" data-bs-toggle="modal"
-                                                    data-bs-target="#newLanguageModal"><i class="bi bi-plus"></i></a>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="card-body">
-                                                <p class="mb-4 text-center">Tasks</p>                                     
-                                                    <a href="/tasks/new"> <i class="bi bi-plus owner-only"></i></a> 
-                                                        <% for(let task of user.tasks) { %>
-                                                            <p>
-                                                                <%= task.title %>
-                                                            </p>
-                                                            <p class="text-muted">
-                                                                <%= task.language %>
-                                                            </p>
-                                                            <% } %>
-
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="card-body">
-                                                <p class="mb-4 text-center">Vocabulary lists</p>
-
-
-                                             
-                                                    <button class="owner-only" data-bs-toggle="modal" data-bs-target="#newWordListModal">
-                                                        <i class="bi bi-plus"></i> new list </button>
-                                                  
-                                                        <ol>
-                                                            <% if(user.wordLists.length> 0) { %>
-                                                                <div>
-                                                                    <% for(let wordList of user.wordLists) { %>
-                                                                        <li>
-                                                                            <p>
-                                                                                <button class=" word-list-link"
-                                                                                    type="button"
-                                                                                    data-bs-toggle="offcanvas"
-                                                                                    data-bs-target="#offcanvas-<%= wordList._id %>"
-                                                                                    aria-controls="offcanvas-<%= wordList._id %>">
-                                                                                    <%= wordList.name %>
-                                                                                </button>
-                                                                            </p>
-                                                                        </li>
-
-                                                                        <!-- off canvas-->
-                                                                        <div class="offcanvas offcanvas-start"
-                                                                            tabindex="-1"
-                                                                            id="offcanvas-<%= wordList._id %>"
-                                                                            aria-labelledby="offcanvasLabel-<% wordList._id %>">
-                                                                            <div class="offcanvas-header">
-                                                                                <h5 class="offcanvas-title"
-                                                                                    id="offcanvasLabel-<% wordList._id %>">
-                                                                                    @<%= user.username %> -> <%=
-                                                                                            wordList.name %>
-                                                                                </h5>
-                                                                                <button type="button"
-                                                                                    class="btn-close text-reset"
-                                                                                    data-bs-dismiss="offcanvas"
-                                                                                    aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="offcanvas-body">
-                                                                                <ul>
-                                                                                    <li> category: <%= wordList.category
-                                                                                            %>
-                                                                                    </li>
-                                                                                    <li> language: <%= wordList.language
-                                                                                            %>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <%= wordList.description %>
-                                                                                    </li>
-                                                                                </ul>
-                                                                                <!-- <button id="add-word-button"
-                                                                                    class="word-list-btn owner-only"
-                                                                                    onclick="addToVocab()">add
-                                                                                    word</button> -->
-
-                                                                                <!-- what is this -->
-                                                                                <form action="/<%= user._id %>/lists"
-                                                                                    method="POST">
-                                                                                    <input type="hidden" name="wordList"
-                                                                                        value="<%= wordList._id %>">
-                                                                                    <div id="word-list-words"></div>
-                                                                                    <button id="addWordBtnSubmit"
-                                                                                        type="submit"
-                                                                                        class="btn btn-success"
-                                                                                        style="display: none;">Add</button>
-
-                                                                                </form>
-
-                                                                                <!-- list words and delete button -->
-                                                                                <ul class="">
-                                                                                    <% for(let word of wordList.words) {
-                                                                                        %>
-                                                                                        <li class="list-group-item">
-                                                                                            <form
-                                                                                                action="/<%= user._id %>/lists/word?_method=DELETE"
-                                                                                                method="POST">
-                                                                                                <input type="hidden"
-                                                                                                    name="wordList"
-                                                                                                    value="<%= wordList._id %>">
-                                                                                                <input type="hidden"
-                                                                                                    name="word"
-                                                                                                    value="<%= word %>">
-                                                                                                <p>
-                                                                                                    <%= word %> <span
-                                                                                                            class="">
-                                                                                                            <button
-                                                                                                                type="submit"
-                                                                                                                class="owner-only"><i
-                                                                                                                    class="bi bi-trash"></i></button>
-                                                                                                        </span>
-                                                                                                </p>
-                                                                                            </form>
-                                                                                        </li>
-                                                                                        <% } %>
-
-                                                                                </ul>
-
-                                                                                <!-- delete entire list button -->
-                                                                                <form class="owner-only"
-                                                                                    action="/<%= user._id %>/lists?_method=DELETE"
-                                                                                    method="POST">
-
-                                                                                    <input type="hidden"
-                                                                                        name="wordListId"
-                                                                                        value=<%=wordList._id %>
-                                                                                    readonly />
-                                                                                    <button type="submit"
-                                                                                        class="word-list-btn">delete
-                                                                                        list</button>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                        <% } %>
-                                                                </div>
-                                                                <% } %>
-                                                        </ol>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-6 mb-3">
+                      <h6>Say this</h6>
+                      <p class="text-muted">
+                        <%= user.about || "Way to go!" %>
+                      </p>
                     </div>
-                </section>
+                  </div>
 
-
-
-                <!-- Modals -->
-
-                <!-- Modal - Verify delete profile -->
-                <div class="modal fade owner-only" id="myModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Just a second, <%= user.username %>!</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                Are you sure you want to permanently delete your
-                                profile?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
-                                <form id="delete-user-form" action="/<%= user._id %>?_method=DELETE" method="POST">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
-                        </div>
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Native</h6>
+                      <p class="text-muted">
+                        <%= user.nativeLanguage %>
+                      </p>
                     </div>
+                    <div class="col-6 mb-3">
+                      <h6>Member since</h6>
+                      <p class="text-muted">
+                        <%= user.createdAt.toLocaleString('en-GB', { day: '2-digit', month: 'long' , year: 'numeric' }) %>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-start">
+
+                    <i class="bi bi-basket mx-3">
+                      <%= user.languagesLearning.length %>
+                      <% if(user.languagesLearning.length==1) { %> language <% }
+                         else { %>
+                      languages <% } %>
+                    </i>
+                    <i class="bi bi-123 mx-3">
+                      <%= user.tasks.length %> tasks
+                    </i>
+                    <i class="bi bi-list">
+                      <%= user.wordLists.length %> vocab lists
+                    </i>
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                <!-- Modal - add language to learning list -->
-                <div class="modal fade owner-only" id="newLanguageModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Hi <%= user.username %>, learning another language?</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/<%= user._id %>/languages" method="POST">
-                                    <div class="input-group col-lg-6 col-md-8 col-sm-10">
-                                        <div class="form-floating">
+  <section style="background-color: #8b9fc6;">
+    <div class="container py-2 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-6">
+          <div class="card" style="border-radius: .5rem;">
+            <div class="row">
 
-                                            <label class="form-label" for="language">Insert language</label>
-
-                                            <select class="form-control" name="addedLanguage" id="add-language-select"
-                                                onclick="setLanguageSelect(event)"></select>
-                                        </div>
-                                        <button class="btn btn-primary">Add</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+              <div class="col-md-4">
+                <div class="card-body">
+                  <p class="mb-4 text-center">Languages</p>
+                  <ul>
+                    <% for(let language of user.languagesLearning) { %>
+                    <li>
+                      <form action="/<%=user._id%>/languages?_method=DELETE" method="POST">
+                        <input name="lang" readonly hidden value="<%= language %>" />
+                        <span>
+                          <%= language %> <button class="owner-only" type="submit"><i class="bi bi-trash"></i></button>
+                        </span>
+                      </form>
+                    </li>
+                    <% } %>
+                  </ul>
+                  <a class="owner-only" id="add-language" data-bs-toggle="modal" data-bs-target="#newLanguageModal"><i class="bi bi-plus"></i></a>
                 </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card-body">
+                  <p class="mb-4 text-center">Tasks</p>
+                  <a href="/tasks/new"> <i class="bi bi-plus owner-only"></i></a>
+                  <% for(let task of user.tasks) { %>
+                  <p>
+                    <%= task.title %>
+                  </p>
+                  <p class="text-muted">
+                    <%= task.language %>
+                  </p>
+                  <% } %>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card-body">
+                  <p class="mb-4 text-center">Vocabulary lists</p>
+                  <button class="owner-only word-list-create" data-bs-toggle="modal" data-bs-target="#newWordListModal">
+                    <i class="bi bi-plus"></i> create </button>
+
+                  <ol>
+                    <% if(user.wordLists.length> 0) { %>
+                    <div>
+                      <% for(let wordList of user.wordLists) { %>
+                      <li>
+                        <p>
+                          <button class="word-list-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-<%= wordList._id %>" aria-controls="offcanvas-<%= wordList._id %>">
+                            <%= wordList.name %>
+                          </button>
+                        </p>
+                      </li>
+
+                      <!-- off canvas-->
+                      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-<%= wordList._id %>" aria-labelledby="offcanvasLabel-<% wordList._id %>">
+                        <div class="offcanvas-header">
+                          <h5 class="offcanvas-title" id="offcanvasLabel-<% wordList._id %>">
+                            @<%= user.username %> -> <%= wordList.name %>
+                          </h5>
+                          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                          <ul>
+                            <li> category: <%= wordList.category %>
+                            </li>
+                            <li> language: <%= wordList.language %>
+                            </li>
+                            <li>
+                              <%= wordList.description %>
+                            </li>
+                          </ul>
+
+                          <form action="/<%= user._id %>/lists" method="POST">
+                            <input type="hidden" name="wordList" value="<%= wordList._id %>">
+                            <div id="word-list-words"></div>
+                            <button id="addWordBtnSubmit" type="submit" class="btn btn-success" style="display: none;">Add</button>
+                          </form>
+
+                          <!-- list words and delete button -->
+                          <ul class="">
+                            <% for(let word of wordList.words) { %>
+                            <li class="list-group-item">
+                              <form action="/<%= user._id %>/lists/word?_method=DELETE" method="POST">
+                                <input type="hidden" name="wordList" value="<%= wordList._id %>">
+                                <input type="hidden" name="word" value="<%= word %>">
+                                <p>
+                                  <%= word %> <span class="">
+                                    <button type="submit" class="owner-only"><i class="bi bi-trash"></i></button>
+                                  </span>
+                                </p>
+                              </form>
+                            </li>
+                            <% } %>
+                          </ul>
+
+                          <!-- delete entire list button -->
+                          <form class="owner-only" action="/<%= user._id %>/lists?_method=DELETE" method="POST">
+
+                            <input type="hidden" name="wordListId" value=<%=wordList._id %> readonly />
+                            <button type="submit" class="word-list-btn">delete
+                              list</button>
+                          </form>
+                        </div>
+                      </div>
+                      <% } %>
+                    </div>
+                    <% } %>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 
-                <!-- modal - add new word list -->
 
-                <div class="modal fade" id="newWordListModal">
-                    <form id="add-word-list" action="/<%= user._id %>/lists" method="POST" autocomplete="off">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">New vocabulary list</h4>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
+  <!-- Modals -->
 
-                                <div class="modal-body">
+  <!-- Modal - Verify delete profile -->
+  <div class="modal fade owner-only" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Just a second, <%= user.username %>!</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to permanently delete your
+          profile?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
+          <form id="delete-user-form" action="/<%= user._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                                    <div class="form-floating mb-3">
-                                        <input type="text" id="word-list-name" class="form-control" name="listName"
-                                            required>
-                                        <label id="form-label" for="word-list-name">Name your list:</label>
-                                    </div>
+  <!-- Modal - add language to learning list -->
+  <div class="modal fade owner-only" id="newLanguageModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Hi <%= user.username %>, learning another language?</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/<%= user._id %>/languages" method="POST">
+            <div class="input-group col-lg-6 col-md-8 col-sm-10">
+              <div class="form-floating">
+                <select class="form-control" name="addedLanguage" id="add-language-select" onclick="setLanguageSelect(event, '<%= user.languagesLearning %>')"></select>
+              </div>
+              <button class="btn btn-primary">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                                    <!-- make select of user profile languages  -->
-                                    <div class="form-floating mb-3">
-                                        <select class="form-control" name="language" id="word-list-language" required>
-                                            <option value="<%= user.nativeLanguage %>""><%= user.nativeLanguage %></option>
+
+  <!-- modal - add new word list -->
+
+  <div class="modal fade" id="newWordListModal">
+    <form id="add-word-list" action="/<%= user._id %>/lists" method="POST" autocomplete="off">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">New vocabulary list</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="form-floating mb-3">
+              <input type="text" id="word-list-name" class="form-control" name="listName" required>
+              <label id="form-label" for="word-list-name">Name your list:</label>
+            </div>
+
+            <!-- make select of user profile languages  -->
+            <div class="form-floating mb-3">
+              <select class="form-control" name="language" id="word-list-language" required>
+                <option value="<%= user.nativeLanguage %>""><%= user.nativeLanguage %></option>
 <% user.languagesLearning.forEach(lang => { %>
 <option value=" <%=lang %>"><%= lang %>
-                                            </option>
-                                            <% }) %>
+                </option>
+                <% }) %>
+              </select>
 
-                                        </select>
+              <label id="form-label" for="word-list-language">Vocab language:</label>
+            </div>
 
-                                        <!-- <input type="text" id="word-list-language" class="form-control" name="language" required> -->
-                                        <label id="form-label" for="word-list-language">Vocab language:</label>
-                                    </div>
+            <div class="form-floating mb-3">
+              <select class="form-control" name="select" id="new-list-category-select">
+                <option value="nouns">Nouns</option>
+                <option value="verbs">Verbs</option>
+                <option value="adjectives">Adjectives</option>
+                <option value="adverbs">Adverbs</option>
+                <option value="conjunctives">Conjunctives</option>
+                <option value="pronouns">Pronouns</option>
+                <option value="other">Other</option>
+              </select>
+              <label id="form-label" for="new-list-category-select">List category:</label>
+            </div>
+            </select>
 
-                                    <div class="form-floating mb-3">
-                                        <select class="form-control" name="select" id="new-list-category-select">
-                                            <option value="nouns">Nouns</option>
-                                            <option value="verbs">Verbs</option>
-                                            <option value="adjectives">Adjectives</option>
-                                            <option value="adverbs">Adverbs</option>
-                                            <option value="conjunctives">Conjunctives</option>
-                                            <option value="pronouns">Pronouns</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                        <label id="form-label" for="new-list-category-select">List category:</label>
-                                    </div>
+            <div class="form-floating mb-3">
+              <input type="text" id="word-list-description" class="form-control" name="description">
+              <label id="form-label" for="word-list-description">Details:</label>
+            </div>
 
-                                    </select>
-
-                                    <div class="form-floating mb-3">
-                                        <input type="text" id="word-list-description" class="form-control"
-                                            name="description">
-                                        <label id="form-label" for="word-list-description">Details:</label>
-                                    </div>
-
-
-                                    <!-- add words -->
-                                    <div id="word-list-words">
-
-                                        <div class="form-floating mb-3">
-                                            <input type="text" id="list-word-1" class="form-control list-word-input"
-                                                name="words[]">
-                                            <label id="form-label" for="list-word">Add word:</label>
-                                        </div>
-
-
-
-                                    </div>
-                                    <div id="add-words-div"></div>
-                                    <button type="button" onclick="addToVocab()" id="add-more-to-word-list"><i
-                                            class="bi bi-plus"></i></button>
-                                </div>
-                                <p id="add-word-comments">You can come back and add more words later</p>
-                                <span>Total words in list:<strong id="list-word-count"> </strong></span>
-                                <div class="modal-footer">
-                                    <!-- <button class="btn btn-primary" id="toggleModal2" data-bs-target="#modal2"
-                            data-bs-toggle="modal" data-bs-dismiss="modal">Next</button> -->
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
-                                    <button type="submit" class="btn btn-success">Save
-                                        list</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <!-- add words -->
+            <div id="word-list-words">
+              <div class="form-floating mb-3">
+                <input type="text" id="list-word-1" class="form-control list-word-input" name="words[]">
+                <label id="form-label" for="list-word">Add word:</label>
+              </div>
+            </div>
+            <div id="add-words-div"></div>
+            <button type="button" onclick="addToVocab()" id="add-more-to-word-list"><i class="bi bi-plus"></i></button>
+          </div>
+          <p id="add-word-comments">You can come back and add more words later</p>
+          <span>Total words in list:<strong id="list-word-count"> </strong></span>
+          <div class="modal-footer">
+            <button type="button" class="btn blue-btn-small" data-bs-dismiss="modal">Back</button>
+            <button type="submit" class="btn blue-btn-small">Save
+              list</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
